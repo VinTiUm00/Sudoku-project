@@ -1,0 +1,3 @@
+/home/voron/prog/Sudoku-project/build/CMakeFiles/Sudoku.dir
+/home/voron/prog/Sudoku-project/build/CMakeFiles/edit_cache.dir
+/home/voron/prog/Sudoku-project/build/CMakeFiles/rebuild_cache.dir

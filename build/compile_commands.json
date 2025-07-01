@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/voron/prog/Sudoku-project/build",
+  "command": "/usr/bin/c++  -I/home/voron/prog/Sudoku-project/header -std=gnu++17 -o CMakeFiles/Sudoku.dir/main.cpp.o -c /home/voron/prog/Sudoku-project/main.cpp",
+  "file": "/home/voron/prog/Sudoku-project/main.cpp",
+  "output": "CMakeFiles/Sudoku.dir/main.cpp.o"
+}
+]
