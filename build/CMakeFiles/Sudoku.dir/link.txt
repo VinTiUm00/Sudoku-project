@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Sudoku.dir/link.d CMakeFiles/Sudoku.dir/main.cpp.o -o Sudoku
