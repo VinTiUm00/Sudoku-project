@@ -1,9 +1,0 @@
-/home/voron/prog/Sudoku-project/build/CMakeFiles/Sudoku.dir
-/home/voron/prog/Sudoku-project/build/CMakeFiles/edit_cache.dir
-/home/voron/prog/Sudoku-project/build/CMakeFiles/rebuild_cache.dir
-/home/voron/prog/Sudoku-project/build/CMakeFiles/list_install_components.dir
-/home/voron/prog/Sudoku-project/build/CMakeFiles/install.dir
-/home/voron/prog/Sudoku-project/build/CMakeFiles/install/local.dir
-/home/voron/prog/Sudoku-project/build/CMakeFiles/install/strip.dir
-/home/voron/prog/Sudoku-project/build/CMakeFiles/Sudoku_autogen_timestamp_deps.dir
-/home/voron/prog/Sudoku-project/build/CMakeFiles/Sudoku_autogen.dir
