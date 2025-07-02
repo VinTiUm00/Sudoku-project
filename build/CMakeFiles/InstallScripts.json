@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/voron/prog/Sudoku-project/build/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

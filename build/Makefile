@@ -85,6 +85,51 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/voron/prog/Sudoku-project/build/CMakeFiles /home/voron/prog/Sudoku-project/build//CMakeFiles/progress.marks
@@ -129,6 +174,104 @@ Sudoku/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/build
 .PHONY : Sudoku/fast
 
+#=============================================================================
+# Target rules for targets named Sudoku_autogen_timestamp_deps
+
+# Build rule for target.
+Sudoku_autogen_timestamp_deps: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Sudoku_autogen_timestamp_deps
+.PHONY : Sudoku_autogen_timestamp_deps
+
+# fast build rule for target.
+Sudoku_autogen_timestamp_deps/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku_autogen_timestamp_deps.dir/build.make CMakeFiles/Sudoku_autogen_timestamp_deps.dir/build
+.PHONY : Sudoku_autogen_timestamp_deps/fast
+
+#=============================================================================
+# Target rules for targets named Sudoku_autogen
+
+# Build rule for target.
+Sudoku_autogen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Sudoku_autogen
+.PHONY : Sudoku_autogen
+
+# fast build rule for target.
+Sudoku_autogen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku_autogen.dir/build.make CMakeFiles/Sudoku_autogen.dir/build
+.PHONY : Sudoku_autogen/fast
+
+Sudoku_autogen/mocs_compilation.o: Sudoku_autogen/mocs_compilation.cpp.o
+.PHONY : Sudoku_autogen/mocs_compilation.o
+
+# target to build an object file
+Sudoku_autogen/mocs_compilation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/Sudoku_autogen/mocs_compilation.cpp.o
+.PHONY : Sudoku_autogen/mocs_compilation.cpp.o
+
+Sudoku_autogen/mocs_compilation.i: Sudoku_autogen/mocs_compilation.cpp.i
+.PHONY : Sudoku_autogen/mocs_compilation.i
+
+# target to preprocess a source file
+Sudoku_autogen/mocs_compilation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/Sudoku_autogen/mocs_compilation.cpp.i
+.PHONY : Sudoku_autogen/mocs_compilation.cpp.i
+
+Sudoku_autogen/mocs_compilation.s: Sudoku_autogen/mocs_compilation.cpp.s
+.PHONY : Sudoku_autogen/mocs_compilation.s
+
+# target to generate assembly for a file
+Sudoku_autogen/mocs_compilation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/Sudoku_autogen/mocs_compilation.cpp.s
+.PHONY : Sudoku_autogen/mocs_compilation.cpp.s
+
+header/moc_Difficult.o: header/moc_Difficult.cpp.o
+.PHONY : header/moc_Difficult.o
+
+# target to build an object file
+header/moc_Difficult.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/header/moc_Difficult.cpp.o
+.PHONY : header/moc_Difficult.cpp.o
+
+header/moc_Difficult.i: header/moc_Difficult.cpp.i
+.PHONY : header/moc_Difficult.i
+
+# target to preprocess a source file
+header/moc_Difficult.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/header/moc_Difficult.cpp.i
+.PHONY : header/moc_Difficult.cpp.i
+
+header/moc_Difficult.s: header/moc_Difficult.cpp.s
+.PHONY : header/moc_Difficult.s
+
+# target to generate assembly for a file
+header/moc_Difficult.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/header/moc_Difficult.cpp.s
+.PHONY : header/moc_Difficult.cpp.s
+
+header/moc_MainWindow.o: header/moc_MainWindow.cpp.o
+.PHONY : header/moc_MainWindow.o
+
+# target to build an object file
+header/moc_MainWindow.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/header/moc_MainWindow.cpp.o
+.PHONY : header/moc_MainWindow.cpp.o
+
+header/moc_MainWindow.i: header/moc_MainWindow.cpp.i
+.PHONY : header/moc_MainWindow.i
+
+# target to preprocess a source file
+header/moc_MainWindow.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/header/moc_MainWindow.cpp.i
+.PHONY : header/moc_MainWindow.cpp.i
+
+header/moc_MainWindow.s: header/moc_MainWindow.cpp.s
+.PHONY : header/moc_MainWindow.s
+
+# target to generate assembly for a file
+header/moc_MainWindow.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/header/moc_MainWindow.cpp.s
+.PHONY : header/moc_MainWindow.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -153,6 +296,54 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/Difficult.o: src/Difficult.cpp.o
+.PHONY : src/Difficult.o
+
+# target to build an object file
+src/Difficult.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/src/Difficult.cpp.o
+.PHONY : src/Difficult.cpp.o
+
+src/Difficult.i: src/Difficult.cpp.i
+.PHONY : src/Difficult.i
+
+# target to preprocess a source file
+src/Difficult.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/src/Difficult.cpp.i
+.PHONY : src/Difficult.cpp.i
+
+src/Difficult.s: src/Difficult.cpp.s
+.PHONY : src/Difficult.s
+
+# target to generate assembly for a file
+src/Difficult.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/src/Difficult.cpp.s
+.PHONY : src/Difficult.cpp.s
+
+src/MainWindow.o: src/MainWindow.cpp.o
+.PHONY : src/MainWindow.o
+
+# target to build an object file
+src/MainWindow.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/src/MainWindow.cpp.o
+.PHONY : src/MainWindow.cpp.o
+
+src/MainWindow.i: src/MainWindow.cpp.i
+.PHONY : src/MainWindow.i
+
+# target to preprocess a source file
+src/MainWindow.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/src/MainWindow.cpp.i
+.PHONY : src/MainWindow.cpp.i
+
+src/MainWindow.s: src/MainWindow.cpp.s
+.PHONY : src/MainWindow.s
+
+# target to generate assembly for a file
+src/MainWindow.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sudoku.dir/build.make CMakeFiles/Sudoku.dir/src/MainWindow.cpp.s
+.PHONY : src/MainWindow.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -160,11 +351,32 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... Sudoku_autogen"
+	@echo "... Sudoku_autogen_timestamp_deps"
 	@echo "... Sudoku"
+	@echo "... Sudoku_autogen/mocs_compilation.o"
+	@echo "... Sudoku_autogen/mocs_compilation.i"
+	@echo "... Sudoku_autogen/mocs_compilation.s"
+	@echo "... header/moc_Difficult.o"
+	@echo "... header/moc_Difficult.i"
+	@echo "... header/moc_Difficult.s"
+	@echo "... header/moc_MainWindow.o"
+	@echo "... header/moc_MainWindow.i"
+	@echo "... header/moc_MainWindow.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/Difficult.o"
+	@echo "... src/Difficult.i"
+	@echo "... src/Difficult.s"
+	@echo "... src/MainWindow.o"
+	@echo "... src/MainWindow.i"
+	@echo "... src/MainWindow.s"
 .PHONY : help
 
 

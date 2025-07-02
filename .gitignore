@@ -1,0 +1,6 @@
+/.cache/
+/build/.qt/
+/build/CMakeFiles/
+/build/header/
+/build/Sudoku_autogen/
+/build/Sudoku
