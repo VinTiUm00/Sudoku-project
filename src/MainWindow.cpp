@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent){
     lblMaxScore = new QLabel(this);
     lblMaxScore->setText(QString("Ваш максимальный счет: "));
     lblMaxScore->setFixedHeight(150);
+    lblMaxScore->setStyleSheet("QLabel { color: white; }");
 
     // изменение размера шрифта
     QFont* font = new QFont(lblMaxScore->font());
@@ -20,8 +21,22 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent){
 
     // инициализация кнопок
     btnPlay = new QPushButton("Играть", this);
+    btnPlay->setFixedHeight(50);
+
     btnSettings = new QPushButton("Настройки", this);
+
     btnExit = new QPushButton("Выход", this);
+    btnExit->setFixedHeight(50);
+
+    // кастомизация
+    btnPlay->setFont(*font);
+    btnPlay->setStyleSheet("QPushButton { background-color: #7CD47B; color: white }");
+
+    btnSettings->setFixedHeight(50);
+    btnSettings->setFont(*font);
+
+    btnExit->setFont(*font);
+    btnExit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; }");
 
     // добавление в группировку
     layout->addWidget(lblMaxScore);
@@ -31,6 +46,7 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent){
 
     connect(btnPlay, &QPushButton::clicked, this, &MainWindow::OpenDifficultMenu);
     connect(btnExit, &QPushButton::clicked, this, &MainWindow::closeWindow);
+
 }
 
 MainWindow::~MainWindow() = default;
@@ -38,6 +54,7 @@ MainWindow::~MainWindow() = default;
 void MainWindow::OpenDifficultMenu(){
     DifficultMenu* Menu = new DifficultMenu(this);
     PlayingWindow* GameWindow = new PlayingWindow();
+    GameWindow->setStyleSheet("PlayingWindow { background-color: #282C34; }");
 
     connect(Menu, &DifficultMenu::EasySelected, GameWindow, &PlayingWindow::startEasy);
     connect(Menu, &DifficultMenu::EasySelected, Menu, &DifficultMenu::closeWindow);
@@ -56,9 +73,10 @@ void MainWindow::OpenDifficultMenu(){
     connect(Menu, &DifficultMenu::InsaneSelected, this, &MainWindow::hideWindow);
 
     connect(GameWindow, &PlayingWindow::windowClosed, this, &MainWindow::showWindow);
+    connect(GameWindow, &PlayingWindow::windowClosed, GameWindow, &QObject::deleteLater);
 
     Menu->setWindowTitle("Выбор сложности");
-    Menu->resize(300, 150);
+    Menu->resize(350, 200);
     Menu->raise();
     Menu->show();
 }

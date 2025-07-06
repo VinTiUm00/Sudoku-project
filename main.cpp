@@ -7,6 +7,7 @@ int main(int argc, char *argv[]) {
 
     MainWindow window; //инициализация главного окна
     window.setObjectName("mainWindow");
+    window.setStyleSheet("MainWindow { background-color: #282C34; }");
 
     window.resize(600, 500);
     window.show();
