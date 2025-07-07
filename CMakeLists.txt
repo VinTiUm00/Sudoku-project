@@ -10,9 +10,17 @@ set(SRC_FILES
     src/MainWindow.cpp
     src/Difficult.cpp
     src/PlayingWindow.cpp
+    src/GameCell.cpp
+    src/ControlCell.cpp
 )
 
-set(HEADER_FILE header/MainWindow.hpp header/Difficult.hpp header/PlayingWindow.hpp)
+set(HEADER_FILE
+    header/MainWindow.hpp
+    header/Difficult.hpp
+    header/PlayingWindow.hpp
+    header/GameCell.hpp
+    header/ControlCell.hpp
+)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Widgets)
 

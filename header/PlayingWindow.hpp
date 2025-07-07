@@ -6,6 +6,9 @@
 #include <QPushButton>
 #include <QGridLayout>
 
+#include "GameCell.hpp"
+#include "ControlCell.hpp"
+
 class PlayingWindow : public QWidget {
     Q_OBJECT
 public:
@@ -32,7 +35,8 @@ public slots:
     void closeWindow();
 
 private:
-    QVector<QPushButton*> buttons;
+    QVector<GameCell*> CellButtons;
+    QVector<ControlCell*> ControlButtons;
 };
 
 #endif
