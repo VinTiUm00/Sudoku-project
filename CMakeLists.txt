@@ -34,6 +34,7 @@ qt_add_executable(${PROJECT_NAME}
     ${MOC_FILES}
 )
 
+
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         Qt::Core
@@ -48,4 +49,11 @@ install(TARGETS ${PROJECT_NAME}
     BUNDLE  DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+add_custom_command(
+    TARGET Sudoku POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+        $<TARGET_FILE:Sudoku>
+        ${CMAKE_SOURCE_DIR}/bin/$<TARGET_FILE_NAME:Sudoku>
 )
