@@ -12,6 +12,7 @@ set(SRC_FILES
     src/PlayingWindow.cpp
     src/GameCell.cpp
     src/ControlCell.cpp
+    src/Helper.cpp
 )
 
 set(HEADER_FILE
@@ -20,6 +21,7 @@ set(HEADER_FILE
     header/PlayingWindow.hpp
     header/GameCell.hpp
     header/ControlCell.hpp
+    header/Helper.hpp
 )
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Widgets)

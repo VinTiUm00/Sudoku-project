@@ -12,12 +12,14 @@ public:
     ControlCell(int num, QString name, QWidget* parent = nullptr);
     virtual ~ControlCell();
     int saynum();
+    void setPassive();
 
 signals:
-    void selectNum(int num);
+    void selectNum(ControlCell* thisCell, int num);
 
 public slots:
     void NumSelect();
+    void setActive();
 
 private:
     int num;
