@@ -1,5 +1,3 @@
-#include <QLabel>
-
 #include "PlayingWindow.hpp"
 #include "GameCell.hpp"
 #include "ControlCell.hpp"
@@ -21,8 +19,6 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     font->setPointSize(12);
     btnExit->setFont(*font);
     btnExit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; }");
-
-    QLabel* CurrentNum = new QLabel(QString::number(CurrentSelectNum), this);
 
     // инициализация игрового поля
     for (int row = 1; row < 10; row++){
@@ -54,12 +50,7 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
         // выбор числа, которое будем вставлять в игровую ячейку
         connect(button, &QPushButton::clicked, button, &ControlCell::NumSelect);
         connect(button, &ControlCell::selectNum, [](int num){CurrentSelectNum = num;});
-        connect(button, &ControlCell::selectNum, CurrentNum, [CurrentNum](int num){CurrentNum->setText(QString::number(num));});
     }
-
-    CurrentNum->setFixedSize(40, 40);
-    CurrentNum->setStyleSheet("QLabel { background-color: #61AFEF; color: white; }");
-    gridLayout->addWidget(CurrentNum, 4, 11);
 
     setLayout(gridLayout);
 }
