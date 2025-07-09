@@ -1,5 +1,4 @@
 #include "MainWindow.hpp"
-#include "header/Generator.hpp"
 
 #include <QApplication>
 
