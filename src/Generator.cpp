@@ -1,10 +1,11 @@
 #include "../header/Generator.hpp"
 #include "../header/MatrixFunctions.hpp"
+#include "../header/Formatter.hpp"
 
 #include <ctime>
 #include <cstdlib>
 
-std::vector<std::vector<Cell>> & Generate (short int mesh_size) {
+std::vector<std::vector<Cell>> Generate (short int mesh_size, short int format_chance) {
     std::srand(std::time(NULL));
     std::vector<std::vector<Cell>> mesh;
     short int amount = mesh_size * mesh_size;
@@ -81,6 +82,9 @@ std::vector<std::vector<Cell>> & Generate (short int mesh_size) {
             Swap_lines_big(mesh, mesh_size, cur_id_1, cur_id_2);
         }
     }
+
+    // Formatting cells
+    Format(mesh, mesh_size, format_chance);
 
     return mesh;
 }
