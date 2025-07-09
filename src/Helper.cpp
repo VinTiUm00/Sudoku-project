@@ -25,7 +25,7 @@ void Helper::selectNum(ControlCell* Cell, int num){
             emit SelectCell5();
             break;
         case 6:
-            emit SelectCell1();
+            emit SelectCell6();
             break;
         case 7:
             emit SelectCell7();
