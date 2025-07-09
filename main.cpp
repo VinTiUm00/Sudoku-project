@@ -1,8 +1,9 @@
 #include "MainWindow.hpp"
+#include "header/Generator.hpp"
 
 #include <QApplication>
  
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {/*
     QApplication app(argc, argv);  
 
     MainWindow window;
@@ -11,5 +12,6 @@ int main(int argc, char *argv[]) {
     window.show();
     window.raise();
     
-    return app.exec();
+    return app.exec();*/
+    Generate(3);
 }

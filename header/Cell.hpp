@@ -3,6 +3,7 @@
 
 class Cell {
 public:
+    Cell();
     Cell(short int);
 
     void set_v (short int);
@@ -10,8 +11,8 @@ public:
     void set_gen (bool);
     bool get_gen ();
 private:
-    short int val;
-    bool generated;
+    short int val = 0;
+    bool generated = true;
 };
 
 #endif

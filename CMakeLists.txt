@@ -9,6 +9,8 @@ set(SRC_FILES
     main.cpp
     src/MainWindow.cpp
     src/Difficult.cpp
+    src/Cell.cpp
+    src/Generator.cpp
 )
 
 set(HEADER_FILE header/MainWindow.hpp header/Difficult.hpp)

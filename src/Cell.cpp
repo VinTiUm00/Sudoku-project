@@ -1,5 +1,7 @@
 #include "../header/Cell.hpp"
 
+Cell::Cell (){}
+
 Cell::Cell (short int val){
     set_v(val);
 }
