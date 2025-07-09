@@ -11,9 +11,20 @@ set(SRC_FILES
     src/Difficult.cpp
     src/Cell.cpp
     src/Generator.cpp
+    src/PlayingWindow.cpp
+    src/GameCell.cpp
+    src/ControlCell.cpp
+    src/Helper.cpp
 )
 
-set(HEADER_FILE header/MainWindow.hpp header/Difficult.hpp)
+set(HEADER_FILE
+    header/MainWindow.hpp
+    header/Difficult.hpp
+    header/PlayingWindow.hpp
+    header/GameCell.hpp
+    header/ControlCell.hpp
+    header/Helper.hpp
+)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Widgets)
 
@@ -24,6 +35,7 @@ qt_add_executable(${PROJECT_NAME}
     ${SRC_FILES}
     ${MOC_FILES}
 )
+
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
@@ -39,4 +51,11 @@ install(TARGETS ${PROJECT_NAME}
     BUNDLE  DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+add_custom_command(
+    TARGET Sudoku POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+        $<TARGET_FILE:Sudoku>
+        ${CMAKE_SOURCE_DIR}/bin/$<TARGET_FILE_NAME:Sudoku>
 )
