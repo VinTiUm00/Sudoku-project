@@ -11,6 +11,7 @@ set(SRC_FILES
     src/Difficult.cpp
     src/Cell.cpp
     src/Generator.cpp
+    src/MatrixFunctions.cpp
     src/PlayingWindow.cpp
     src/GameCell.cpp
     src/ControlCell.cpp
@@ -24,6 +25,9 @@ set(HEADER_FILE
     header/GameCell.hpp
     header/ControlCell.hpp
     header/Helper.hpp
+    header/MatrixFunctions.hpp
+    header/Generator.hpp
+    header/Cell.hpp
 )
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Widgets)
