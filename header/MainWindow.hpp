@@ -16,8 +16,10 @@ public:
 public slots:
     void OpenDifficultMenu();
     void closeWindow();
+    void hideWindow();
+    void showWindow();
 
-private: // какие кнопки будут
+private: // какие видимые элементы будут
     QLabel* lblMaxScore;
     QPushButton* btnPlay;
     QPushButton* btnSettings;

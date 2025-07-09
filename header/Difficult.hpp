@@ -12,6 +12,12 @@ public:
     DifficultMenu(QWidget* parent = nullptr);
     virtual ~DifficultMenu();
 
+signals:
+    void EasySelected();
+    void NormalSelected();
+    void HardSelected();
+    void InsaneSelected();
+
 public slots:
     void closeWindow();
 
