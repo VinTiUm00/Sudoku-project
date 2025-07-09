@@ -11,11 +11,13 @@ class GameCell : public QPushButton{
 public:
     GameCell(int row, int col, QWidget* parent = nullptr);
     virtual ~GameCell();
+    void ChangeNum(int num);
+
 signals:
-    void WannaChange();
+    void WannaChangeOut(GameCell* Cell);
 
 public slots:
-    void ChangeNum(int num);
+    void WannaChangeIn();
 
 private:
     int row;

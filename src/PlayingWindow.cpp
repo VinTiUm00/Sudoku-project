@@ -23,14 +23,23 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     tmp1->setFixedHeight(40);
     gridLayout->addWidget(tmp1, 1, 0, 1, 9);
 
+    Helper* helper = new Helper(0);
+
+    QPushButton* forFont = new QPushButton();
+    QFont* btnFont = new QFont(forFont->font());
+    btnFont->setPointSize(14);
+
     // инициализация игрового поля
     for (int row = 2; row < 11; row++){
         for (int col = 0; col < 9; col++){
             GameCell* button = new GameCell(row-2, col, this);
 
             button->setFixedSize(40, 40);
+            button->setFont(*btnFont);
 
             gridLayout->addWidget(button, row, col);
+
+            connect(button, &GameCell::WannaChangeOut, helper, &Helper::ChangeCell);
 
             CellButtons.append(button);
         }
@@ -39,11 +48,6 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     QWidget* tmp = new QWidget(this);
     tmp->setFixedHeight(40);
     gridLayout->addWidget(tmp, 11, 0, 1, 9);
-
-    QFont* btnFont = new QFont(CellButtons[1]->font());
-    btnFont->setPointSize(14);
-
-    Helper* helper = new Helper(0);
 
     // инициализация кнопок управления
     for (int i = 1; i < 10; i++){

@@ -1,3 +1,5 @@
+#include <QMessageBox>
+
 #include "Helper.hpp"
 
 Helper::Helper(int num){
@@ -45,4 +47,18 @@ int Helper::SayCurNum(){
 
 void Helper::setPrevCell(ControlCell* Cell){
     this->prevCell = Cell;
+}
+
+void Helper::ChangeCell(GameCell* Cell){
+    if (this->CurrentNum == 0){
+        QMessageBox* box = new QMessageBox;
+        box->setText("Перед изменением клетки выберите число!");
+        box->exec();
+        box->setIcon(QMessageBox::Critical);
+
+        delete box;
+    }
+    else{
+        Cell->ChangeNum(this->CurrentNum);
+    }
 }
