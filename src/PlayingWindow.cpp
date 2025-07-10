@@ -35,13 +35,15 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     btnFont->setPointSize(14);
 
     // Почти решенное судоку
-    std::vector<std::vector<short int>> Matrix = Generate(3, 50);
+    short int mesh_size = 3, format_chance = 50;
+    std::vector<std::vector<short int>> Matrix = Generate(mesh_size, format_chance);
 
     // инициализация игрового поля
     for (int row = 0; row < 9; row++){
         for (int col = 0; col < 9; col++){
             if (Matrix[row][col] == 0){ // если в Martix 0, значит его нужно решить
                 GameCell* button = new GameCell(this, true);
+                button->setPositionMatrix(Matrix, mesh_size, row, col);
 
                 button->setFixedSize(40, 40);
                 button->setFont(*btnFont);
@@ -55,6 +57,7 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
 
             else{ // если не 0, значит ячейка меняться не может
                 GameCell* button = new GameCell(this, Matrix[row][col]);
+                button->setPositionMatrix(Matrix, mesh_size, row, col);
 
                 button->setFixedSize(40, 40);
                 button->setFont(*btnFont);

@@ -3,6 +3,7 @@
 
 // класс игровой ячейки
 #include <QPushButton>
+#include <vector>
 
 class GameCell : public QPushButton{
 
@@ -14,6 +15,7 @@ public:
     virtual ~GameCell();
     void ChangeNum(int num); // изменить число ячейки
     void setfCanChange(bool value); // установить fCanChange
+    void setPositionMatrix(std::vector<std::vector<short int>> &mesh, short int mesh_size, short int row, short int col);
 
 signals:
     void WannaChangeOut(GameCell* Cell);
@@ -24,6 +26,11 @@ public slots:
 private:
     int num;
     bool fCanChange;
+
+    short int row;
+    short int col;
+    std::vector<std::vector<short int>> mesh;
+    short int mesh_size;
 };
 
 #endif
