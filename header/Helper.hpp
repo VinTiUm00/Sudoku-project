@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "ControlCell.hpp"
+#include "GameCell.hpp"
 
 class Helper : public QObject{
 
@@ -27,6 +28,7 @@ signals:
 
 public slots:
     void selectNum(ControlCell* Cell, int num);
+    void ChangeCell(GameCell* Cell);
 
 private:
     ControlCell* prevCell;
