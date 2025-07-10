@@ -6,14 +6,15 @@
 #include "ControlCell.hpp"
 #include "GameCell.hpp"
 
+// класс помощника. Помогает на игровом поле
 class Helper : public QObject{
 
-    Q_OBJECT
+    Q_OBJECT // Макрос, без которого не работают сигналы
 
 public:
     Helper(int num);
-    int SayCurNum();
-    void setPrevCell(ControlCell* Cell);
+    int SayCurNum(); // говорит текущее выбранное число (для debug'а)
+    void setPrevCell(ControlCell* Cell); // для принудительного указания предыдущей активной ячейки
 
 signals:
     void SelectCell1();

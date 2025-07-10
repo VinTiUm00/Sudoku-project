@@ -4,14 +4,16 @@
 #include <QDialog>
 #include <QPushButton>
 
+// класс для окна выбора сложности
 class DifficultMenu : public QDialog {
 
     Q_OBJECT // Макрос, без которого не работают сигналы
 
 public:
-    DifficultMenu(QWidget* parent = nullptr);
+    DifficultMenu(QWidget* parent = nullptr); // конструктор
     virtual ~DifficultMenu();
 
+// сигналы. Какая сложность выбрана
 signals:
     void EasySelected();
     void NormalSelected();

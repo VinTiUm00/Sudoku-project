@@ -2,10 +2,12 @@
 #include "GameCell.hpp"
 #include "ControlCell.hpp"
 #include "Helper.hpp"
+#include "Generator.hpp"
 
-#define DEBUG
+//#define DEBUG
 
 PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
+    // группировщик
     QGridLayout* gridLayout = new QGridLayout(this);
     gridLayout->setSpacing(2);
 
@@ -19,32 +21,55 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     btnExit->setFont(*font);
     btnExit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; }");
 
+    // проставка
     QWidget* tmp1 = new QWidget(this); // вероятнее всего будет заменен на "текущий счет"
     tmp1->setFixedHeight(40);
     gridLayout->addWidget(tmp1, 1, 0, 1, 9);
 
+    // помощник
     Helper* helper = new Helper(0);
 
+    // Шрифт для дальнейшего использования
     QPushButton* forFont = new QPushButton();
     QFont* btnFont = new QFont(forFont->font());
     btnFont->setPointSize(14);
 
+    // Почти решенное судоку
+    std::vector<std::vector<short int>> Matrix = Generate(3, 50);
+
     // инициализация игрового поля
-    for (int row = 2; row < 11; row++){
+    for (int row = 0; row < 9; row++){
         for (int col = 0; col < 9; col++){
-            GameCell* button = new GameCell(row-2, col, this);
+            if (Matrix[row][col] == 0){ // если в Martix 0, значит его нужно решить
+                GameCell* button = new GameCell(this, true);
 
-            button->setFixedSize(40, 40);
-            button->setFont(*btnFont);
+                button->setFixedSize(40, 40);
+                button->setFont(*btnFont);
 
-            gridLayout->addWidget(button, row, col);
+                gridLayout->addWidget(button, row+2, col);
 
-            connect(button, &GameCell::WannaChangeOut, helper, &Helper::ChangeCell);
+                connect(button, &GameCell::WannaChangeOut, helper, &Helper::ChangeCell);
 
-            CellButtons.append(button);
+                CellButtons.append(button);
+            }
+
+            else{ // если не 0, значит ячейка меняться не может
+                GameCell* button = new GameCell(this, Matrix[row][col]);
+
+                button->setFixedSize(40, 40);
+                button->setFont(*btnFont);
+                button->setStyleSheet("GameCell { background-color: #6e6e6e; color: black; font-weight: 900;}");
+
+                gridLayout->addWidget(button, row+2, col);
+
+                connect(button, &GameCell::WannaChangeOut, helper, &Helper::ChangeCell);
+
+                CellButtons.append(button);
+            }
         }
     }
 
+    // проставка
     QWidget* tmp = new QWidget(this);
     tmp->setFixedHeight(40);
     gridLayout->addWidget(tmp, 11, 0, 1, 9);
@@ -57,6 +82,7 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
         button->setFixedSize(40, 40);
         button->setFont(*btnFont);
 
+        // группировка
         gridLayout->addWidget(button, 12, i-1);
 
         // выбор числа, которое будем вставлять в игровую ячейку
@@ -67,6 +93,7 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
 
     helper->setPrevCell(ControlButtons[0]);
 
+    // connect'ы
     connect(helper, &Helper::SelectCell1, ControlButtons[0], &ControlCell::setActive);
     connect(helper, &Helper::SelectCell2, ControlButtons[1], &ControlCell::setActive);
     connect(helper, &Helper::SelectCell3, ControlButtons[2], &ControlCell::setActive);
