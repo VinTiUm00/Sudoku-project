@@ -2,8 +2,11 @@
 
 ControlCell::ControlCell(int num, QString name, QWidget* parent) : QPushButton(name, parent){
     this->num = num;
-    this->setStyleSheet("ControlCell { background-color: #61AFEF; color: black; }");
-    connect(this, &QPushButton::clicked, this, &ControlCell::NumSelect);
+
+    // кастомизация
+    this->setStyleSheet("ControlCell { background-color: #61AFEF; color: black; font-weight: 900; }");
+
+    connect(this, &QPushButton::clicked, this, &ControlCell::NumSelect); // связь нажатия и NumSelect
 }
 
 ControlCell::~ControlCell() = default;
@@ -17,9 +20,9 @@ int ControlCell::saynum(){
 }
 
 void ControlCell::setPassive(){
-    this->setStyleSheet("ControlCell { background-color: #61AFEF; color: black; }");
+    this->setStyleSheet("ControlCell { background-color: #61AFEF; color: black; font-weight: 900; }");
 }
 
 void ControlCell::setActive(){
-    this->setStyleSheet("ControlCell { background-color: #7CD47B; color: black; }");
+    this->setStyleSheet("ControlCell { background-color: #7CD47B; color: black; font-weight: 900; }");
 }

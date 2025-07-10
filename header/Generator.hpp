@@ -1,9 +1,9 @@
 #ifndef GENERATOR_HPP
 #define GENERATOR_HPP
 
-#include "../header/Cell.hpp"
 #include <vector>
 
-std::vector<std::vector<Cell>> Generate (short int, short int);
+std::vector<std::vector<short int>> Generate (short int size, short int chance);
+void Format (std::vector<std::vector<short int>> &mesh, short int size, short int chance);
 
 #endif

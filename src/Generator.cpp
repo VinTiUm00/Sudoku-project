@@ -1,13 +1,12 @@
-#include "../header/Generator.hpp"
-#include "../header/MatrixFunctions.hpp"
-#include "../header/Formatter.hpp"
+#include "Generator.hpp"
+#include "MatrixFunctions.hpp"
 
 #include <ctime>
 #include <cstdlib>
 
-std::vector<std::vector<Cell>> Generate (short int mesh_size, short int format_chance) {
+std::vector<std::vector<short int>> Generate (short int mesh_size, short int format_chance) {
     std::srand(std::time(NULL));
-    std::vector<std::vector<Cell>> mesh;
+    std::vector<std::vector<short int>> mesh;
     short int amount = mesh_size * mesh_size;
 
     // Create data with nums 1-amount
@@ -23,7 +22,7 @@ std::vector<std::vector<Cell>> Generate (short int mesh_size, short int format_c
         cust_id = mesh_size * x + x / mesh_size;
 
         for (short int y = 0; y < amount; y++){
-            mesh[x].push_back(Cell(data[cust_id % amount]));
+            mesh[x].push_back(data[cust_id % amount]);
             cust_id++;
         }
     }

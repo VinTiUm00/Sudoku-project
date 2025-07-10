@@ -41,6 +41,7 @@ DifficultMenu::DifficultMenu(QWidget* parent) : QDialog(parent){
     layout->addWidget(Insane);
     layout->addWidget(Exit);
 
+    // коннекты
     connect(Exit, &QPushButton::clicked, this, &DifficultMenu::closeWindow);
     connect(Easy, &QPushButton::clicked, this, &DifficultMenu::EasySelected);
     connect(Normal, &QPushButton::clicked, this, &DifficultMenu::NormalSelected);

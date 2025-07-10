@@ -9,23 +9,17 @@
 #include "GameCell.hpp"
 #include "ControlCell.hpp"
 
+// класс игрового поля
 class PlayingWindow : public QWidget {
-    Q_OBJECT
+
+    Q_OBJECT // Макрос, без которого не работают сигналы
+
 public:
     PlayingWindow(QWidget* parent = nullptr);
     virtual ~PlayingWindow();
 
 signals:
     void windowClosed();
-    void selectNumberOne();
-    void selectNumberTwo();
-    void selectNumberThree();
-    void selectNumberFour();
-    void selectNumberFive();
-    void selectNumberSix();
-    void selectNumberSeven();
-    void selectNumberEight();
-    void selectNumberNine();
 
 public slots:
     void startEasy();

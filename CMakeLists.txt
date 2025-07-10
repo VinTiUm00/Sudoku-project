@@ -5,11 +5,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(SRC_FILES
+set(SRC_FILES # файлы для компиляции
     main.cpp
     src/MainWindow.cpp
     src/Difficult.cpp
-    src/Cell.cpp
     src/Generator.cpp
     src/MatrixFunctions.cpp
     src/Formatter.cpp
@@ -19,20 +18,16 @@ set(SRC_FILES
     src/Helper.cpp
 )
 
-set(HEADER_FILE
+set(HEADER_FILE # header'ы для MOC (header'ы, где используется макрос Q_OBJECT)
     header/MainWindow.hpp
     header/Difficult.hpp
     header/PlayingWindow.hpp
     header/GameCell.hpp
     header/ControlCell.hpp
     header/Helper.hpp
-    header/MatrixFunctions.hpp
-    header/Generator.hpp
-    header/Cell.hpp
-    header/Formatter.hpp
 )
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Widgets)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Widgets) # Поиск QT и его компонентов
 
 qt_standard_project_setup()
 
