@@ -8,12 +8,11 @@
 
 PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     // группировщик
-    QGridLayout* gridLayout = new QGridLayout(this);
-    gridLayout->setSpacing(2);
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
     // кнопка выхода
     QPushButton* btnExit = new QPushButton("Выход", this);
-    gridLayout->addWidget(btnExit, 0, 0, 1, 9);
+    mainLayout->addWidget(btnExit);
     connect(btnExit, &QPushButton::clicked, this, &PlayingWindow::closeWindow);
 
     QFont* font = new QFont(btnExit->font());
@@ -24,7 +23,7 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     // проставка
     QWidget* tmp1 = new QWidget(this); // вероятнее всего будет заменен на "текущий счет"
     tmp1->setFixedHeight(40);
-    gridLayout->addWidget(tmp1, 1, 0, 1, 9);
+    mainLayout->addWidget(tmp1);
 
     // помощник
     Helper* helper = new Helper(0);
@@ -35,44 +34,46 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     btnFont->setPointSize(14);
 
     // Почти решенное судоку
-    std::vector<std::vector<short int>> Matrix = Generate(3, 50);
+    short int mesh_size = 3, format_chance = 50;
+    std::vector<std::vector<short int>> Matrix = Generate(mesh_size, format_chance);
+
+    QGridLayout* gridLayoutGame = new QGridLayout();
+    gridLayoutGame->setSpacing(2);
 
     // инициализация игрового поля
     for (int row = 0; row < 9; row++){
         for (int col = 0; col < 9; col++){
+            GameCell* button = nullptr;
+
             if (Matrix[row][col] == 0){ // если в Martix 0, значит его нужно решить
-                GameCell* button = new GameCell(this, true);
-
-                button->setFixedSize(40, 40);
-                button->setFont(*btnFont);
-
-                gridLayout->addWidget(button, row+2, col);
-
-                connect(button, &GameCell::WannaChangeOut, helper, &Helper::ChangeCell);
-
-                CellButtons.append(button);
+                button = new GameCell(this, true);
+                button->setPositionMatrix(Matrix, mesh_size, row, col);
             }
-
             else{ // если не 0, значит ячейка меняться не может
-                GameCell* button = new GameCell(this, Matrix[row][col]);
-
-                button->setFixedSize(40, 40);
-                button->setFont(*btnFont);
+                button = new GameCell(this, Matrix[row][col]);
+                button->setPositionMatrix(Matrix, mesh_size, row, col);
                 button->setStyleSheet("GameCell { background-color: #6e6e6e; color: black; font-weight: 900;}");
-
-                gridLayout->addWidget(button, row+2, col);
-
-                connect(button, &GameCell::WannaChangeOut, helper, &Helper::ChangeCell);
-
-                CellButtons.append(button);
             }
+
+            button->setFixedSize(40, 40);
+            button->setFont(*btnFont);
+
+            gridLayoutGame->addWidget(button, row, col);
+
+            connect(button, &GameCell::WannaChangeOut, helper, &Helper::ChangeCell);
+
+            CellButtons.append(button);
         }
     }
+
+    mainLayout->addLayout(gridLayoutGame);
 
     // проставка
     QWidget* tmp = new QWidget(this);
     tmp->setFixedHeight(40);
-    gridLayout->addWidget(tmp, 11, 0, 1, 9);
+    mainLayout->addWidget(tmp);
+
+    QHBoxLayout* hBoxLayoutControl = new QHBoxLayout();
 
     // инициализация кнопок управления
     for (int i = 1; i < 10; i++){
@@ -83,13 +84,15 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
         button->setFont(*btnFont);
 
         // группировка
-        gridLayout->addWidget(button, 12, i-1);
+        hBoxLayoutControl->addWidget(button);
 
         // выбор числа, которое будем вставлять в игровую ячейку
         connect(button, &ControlCell::selectNum, helper, &Helper::selectNum);
 
         ControlButtons.append(button);
     }
+
+    mainLayout->addLayout(hBoxLayoutControl);
 
     helper->setPrevCell(ControlButtons[0]);
 
@@ -104,7 +107,7 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     connect(helper, &Helper::SelectCell8, ControlButtons[7], &ControlCell::setActive);
     connect(helper, &Helper::SelectCell9, ControlButtons[8], &ControlCell::setActive);
 
-    setLayout(gridLayout);
+    setLayout(mainLayout);
 }
 
 PlayingWindow::~PlayingWindow() = default;
