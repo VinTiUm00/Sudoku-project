@@ -1,7 +1,6 @@
 #include <QMessageBox>
 
 #include "GameCell.hpp"
-#include "Check.hpp"
 
 GameCell::GameCell(QWidget* parent, bool fvalue) : QPushButton(parent){
     this->fCanChange = fvalue;
@@ -19,10 +18,10 @@ GameCell::~GameCell() = default;
 void GameCell::ChangeNum(int num){
     if (this->fCanChange == true){
         this->num = num;
-        this->mesh[this->row][this->col] = num;
+        (*(this->mesh))[this->row][this->col] = num;
         this->setText(QString::number(num));
         
-        if (!isCellAccord2Rules(this->mesh, this->mesh_size, this->row, this->col)){
+        if (!(this->isCellAccord2Rules())){
             this->setStyleSheet("GameCell { background-color: #AF505A; color: black; font-weight: 900; }");
         }
         else {
@@ -48,8 +47,35 @@ void GameCell::setfCanChange(bool value){
 }
 
 void GameCell::setPositionMatrix(std::vector<std::vector<short int>> &mesh, short int mesh_size, short int row, short int col){
-    this->mesh = mesh;
+    this->mesh = &mesh;
     this->mesh_size = mesh_size;
     this->row = row;
     this->col = col;
+}
+
+bool GameCell::isCellAccord2Rules (){
+    // Check line
+    for (short int j = 0; j < this->mesh_size * this->mesh_size; j++){
+        if (this->col != j and this->num == (*this->mesh)[this->row][j]){
+            return false;
+        }
+    }
+
+    // Check column
+    for (short int i = 0; i < this->mesh_size * this->mesh_size; i++){
+        if (this->row != i and this->num == (*this->mesh)[i][this->col]){
+            return false;
+        }
+    }
+
+    // Check big cell
+    for (short int i = this->row / this->mesh_size * this->mesh_size; i < (this->row / this->mesh_size + 1) * this->mesh_size; i++){
+        for (short int j = this->col / this->mesh_size * this->mesh_size; j < (this->col / this->mesh_size + 1) * this->mesh_size; j++){
+            if ((this->row != i or this->col != j) and this->num == (*this->mesh)[i][j]){
+                return false;
+            }
+        }
+    }
+
+    return true;
 }

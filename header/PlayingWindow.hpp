@@ -31,6 +31,7 @@ public slots:
 private:
     QVector<GameCell*> CellButtons;
     QVector<ControlCell*> ControlButtons;
+    std::vector<std::vector<short int>> Matrix;
 };
 
 #endif

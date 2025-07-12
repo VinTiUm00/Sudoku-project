@@ -16,6 +16,7 @@ public:
     void ChangeNum(int num); // изменить число ячейки
     void setfCanChange(bool value); // установить fCanChange
     void setPositionMatrix(std::vector<std::vector<short int>> &mesh, short int mesh_size, short int row, short int col);
+    bool isCellAccord2Rules ();
 
 signals:
     void WannaChangeOut(GameCell* Cell);
@@ -29,8 +30,10 @@ private:
 
     short int row;
     short int col;
-    std::vector<std::vector<short int>> mesh;
+    std::vector<std::vector<short int>> *mesh;
     short int mesh_size;
+
+    QVector<GameCell*> *GC_vector;
 };
 
 #endif

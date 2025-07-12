@@ -35,7 +35,7 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
 
     // Почти решенное судоку
     short int mesh_size = 3, format_chance = 50;
-    std::vector<std::vector<short int>> Matrix = Generate(mesh_size, format_chance);
+    this->Matrix = Generate(mesh_size, format_chance);
 
     QGridLayout* gridLayoutGame = new QGridLayout();
     gridLayoutGame->setSpacing(2);
