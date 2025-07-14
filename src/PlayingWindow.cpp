@@ -1,3 +1,5 @@
+#include <QMessageBox>
+
 #include "PlayingWindow.hpp"
 #include "GameCell.hpp"
 #include "ControlCell.hpp"
@@ -35,7 +37,7 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
 
     // Почти решенное судоку
     short int mesh_size = 3, format_chance = 50;
-    std::vector<std::vector<short int>> Matrix = Generate(mesh_size, format_chance);
+    this->Matrix = Generate(mesh_size, format_chance);
 
     QGridLayout* gridLayoutGame = new QGridLayout();
     gridLayoutGame->setSpacing(2);
@@ -48,11 +50,16 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
             if (Matrix[row][col] == 0){ // если в Martix 0, значит его нужно решить
                 button = new GameCell(this, true);
                 button->setPositionMatrix(Matrix, mesh_size, row, col);
+
+                button->connectPW(CellButtons, left2victory);
+                this->left2victory++;
             }
             else{ // если не 0, значит ячейка меняться не может
                 button = new GameCell(this, Matrix[row][col]);
                 button->setPositionMatrix(Matrix, mesh_size, row, col);
                 button->setStyleSheet("GameCell { background-color: #6e6e6e; color: black; font-weight: 900;}");
+
+                button->connectPW(CellButtons, left2victory);
             }
 
             button->setFixedSize(40, 40);
@@ -67,6 +74,7 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     }
 
     mainLayout->addLayout(gridLayoutGame);
+    connect(helper, &Helper::left0, this, &PlayingWindow::Victory);
 
     // проставка
     QWidget* tmp = new QWidget(this);
@@ -149,3 +157,18 @@ void PlayingWindow::startInsane(){
     this->raise();
 }
 
+void PlayingWindow::Victory(){
+    for (GameCell *CurCell : CellButtons){
+        (*CurCell).setGREENclr();
+        (*CurCell).setfCanChange(false);
+    }
+
+    this->left2victory--;
+
+    QMessageBox* box = new QMessageBox;
+    box->setText("Вы решили судоку!!!");
+    box->exec();
+    box->setIcon(QMessageBox::Critical);
+
+    delete box;
+}

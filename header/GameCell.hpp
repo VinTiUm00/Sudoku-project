@@ -15,7 +15,16 @@ public:
     virtual ~GameCell();
     void ChangeNum(int num); // изменить число ячейки
     void setfCanChange(bool value); // установить fCanChange
+
     void setPositionMatrix(std::vector<std::vector<short int>> &mesh, short int mesh_size, short int row, short int col);
+    void connectPW(QVector<GameCell*> &GC_vector, int &counter);
+    bool isCellAccord2Rules ();
+    int getLeft();
+
+    void setYELLOWclr();
+    void setSELFclr();
+    void setGREENclr();
+    void setBLUEclr();
 
 signals:
     void WannaChangeOut(GameCell* Cell);
@@ -24,13 +33,18 @@ public slots:
     void WannaChangeIn();
 
 private:
-    int num;
-    bool fCanChange;
+    int num = 0;
+    bool fCanChange = false;
 
     short int row;
     short int col;
-    std::vector<std::vector<short int>> mesh;
+    std::vector<std::vector<short int>> *mesh;
     short int mesh_size;
+
+    QVector<GameCell*> *GC_vector;
+    bool isWrongPlace = false;
+    bool isAlreadyBlue = false;
+    int *counter;
 };
 
 #endif

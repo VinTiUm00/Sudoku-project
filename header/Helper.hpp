@@ -26,6 +26,7 @@ signals:
     void SelectCell7();
     void SelectCell8();
     void SelectCell9();
+    void left0();
 
 public slots:
     void selectNum(ControlCell* Cell, int num);

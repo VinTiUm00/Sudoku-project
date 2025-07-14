@@ -16,7 +16,6 @@ set(SRC_FILES # файлы для компиляции
     src/GameCell.cpp
     src/ControlCell.cpp
     src/Helper.cpp
-    src/Check.cpp
 )
 
 set(HEADER_FILE # header'ы для MOC (header'ы, где используется макрос Q_OBJECT)

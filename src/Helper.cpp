@@ -51,5 +51,9 @@ void Helper::ChangeCell(GameCell* Cell){
     }
     else{
         Cell->ChangeNum(this->CurrentNum);
+
+        if (!Cell->getLeft()){
+            emit left0();
+        }
     }
 }

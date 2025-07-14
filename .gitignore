@@ -1,4 +1,5 @@
 /.cache/
 /build/*
 !/build/.gitkeep
-/.cache/
+/.vscode/
+/bin/Sudoku.exe
