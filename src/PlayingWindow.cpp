@@ -1,14 +1,14 @@
 #include <QMessageBox>
 
 #include "PlayingWindow.hpp"
-#include "GameCell.hpp"
-#include "ControlCell.hpp"
 #include "Helper.hpp"
 #include "Generator.hpp"
 
 //#define DEBUG
 
-PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
+PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){}
+
+void PlayingWindow::InitialiseGameField(short int mesh_size, short int format_chance){
     // группировщик
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
@@ -36,15 +36,14 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     btnFont->setPointSize(14);
 
     // Почти решенное судоку
-    short int mesh_size = 3, format_chance = 50;
     this->Matrix = Generate(mesh_size, format_chance);
 
     QGridLayout* gridLayoutGame = new QGridLayout();
     gridLayoutGame->setSpacing(2);
 
     // инициализация игрового поля
-    for (int row = 0; row < 9; row++){
-        for (int col = 0; col < 9; col++){
+    for (int row = 0; row < mesh_size * mesh_size; row++){
+        for (int col = 0; col < mesh_size * mesh_size; col++){
             GameCell* button = nullptr;
 
             if (Matrix[row][col] == 0){ // если в Martix 0, значит его нужно решить
@@ -84,7 +83,7 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     QHBoxLayout* hBoxLayoutControl = new QHBoxLayout();
 
     // инициализация кнопок управления
-    for (int i = 1; i < 10; i++){
+    for (int i = 1; i <= mesh_size * mesh_size; i++){
         ControlCell* button = new ControlCell(i, QString::number(i), this);
 
         // кастомизация управляющих кнопок
@@ -118,6 +117,9 @@ void PlayingWindow::startEasy(){
 #ifdef DEBUG
     qDebug() << "startEasy";
 #endif
+    short int mesh_size = 2, format_chance = 50;
+    this->InitialiseGameField(mesh_size, format_chance);
+
     this->show();
     this->raise();
 }
@@ -126,6 +128,9 @@ void PlayingWindow::startNormal(){
 #ifdef DEBUG
     qDebug() << "startNormal";
 #endif
+    short int mesh_size = 3, format_chance = 50;
+    this->InitialiseGameField(mesh_size, format_chance);
+
     this->show();
     this->raise();
 }
@@ -134,6 +139,9 @@ void PlayingWindow::startHard(){
 #ifdef DEBUG
     qDebug() << "startHard";
 #endif
+    short int mesh_size = 4, format_chance = 50;
+    this->InitialiseGameField(mesh_size, format_chance);
+
     this->show();
     this->raise();
 }
@@ -142,6 +150,9 @@ void PlayingWindow::startInsane(){
 #ifdef DEBUG
     qDebug() << "startInsane";
 #endif
+    short int mesh_size = 5, format_chance = 50;
+    this->InitialiseGameField(mesh_size, format_chance);
+
     this->show();
     this->raise();
 }

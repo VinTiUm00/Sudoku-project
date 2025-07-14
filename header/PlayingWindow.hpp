@@ -17,6 +17,7 @@ class PlayingWindow : public QWidget {
 public:
     PlayingWindow(QWidget* parent = nullptr);
     virtual ~PlayingWindow();
+    void InitialiseGameField(short int mesh_size, short int format_chance);
 
 signals:
     void windowClosed();
