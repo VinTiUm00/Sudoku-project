@@ -17,7 +17,6 @@ class PlayingWindow : public QWidget {
 public:
     PlayingWindow(QWidget* parent = nullptr);
     virtual ~PlayingWindow();
-    void Victory();
 
 signals:
     void windowClosed();
@@ -28,6 +27,7 @@ public slots:
     void startHard();
     void startInsane();
     void closeWindow();
+    void Victory();
 
 private:
     QVector<GameCell*> CellButtons;

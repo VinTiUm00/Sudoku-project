@@ -104,17 +104,6 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
 
     helper->setPrevCell(ControlButtons[0]);
 
-    // connect'ы
-    connect(helper, &Helper::SelectCell1, ControlButtons[0], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell2, ControlButtons[1], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell3, ControlButtons[2], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell4, ControlButtons[3], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell5, ControlButtons[4], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell6, ControlButtons[5], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell7, ControlButtons[6], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell8, ControlButtons[7], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell9, ControlButtons[8], &ControlCell::setActive);
-
     setLayout(mainLayout);
 }
 

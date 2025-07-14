@@ -17,15 +17,6 @@ public:
     void setPrevCell(ControlCell* Cell); // для принудительного указания предыдущей активной ячейки
 
 signals:
-    void SelectCell1();
-    void SelectCell2();
-    void SelectCell3();
-    void SelectCell4();
-    void SelectCell5();
-    void SelectCell6();
-    void SelectCell7();
-    void SelectCell8();
-    void SelectCell9();
     void left0();
 
 public slots:
