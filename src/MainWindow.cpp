@@ -57,6 +57,8 @@ void MainWindow::OpenDifficultMenu(){
     Menu->setStyleSheet("DifficultMenu { background-color: #282C34; }");
     GameWindow->setStyleSheet("PlayingWindow { background-color: #282C34; }");
 
+    connect(Menu, &DifficultMenu::SlValChanged, GameWindow, &PlayingWindow::setFormatVal);
+
     connect(Menu, &DifficultMenu::EasySelected, GameWindow, &PlayingWindow::startEasy);
     connect(Menu, &DifficultMenu::EasySelected, Menu, &DifficultMenu::closeWindow);
     connect(Menu, &DifficultMenu::EasySelected, this, &MainWindow::hideWindow);

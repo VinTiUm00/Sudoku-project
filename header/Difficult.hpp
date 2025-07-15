@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QPushButton>
+#include <QSlider>
+#include <QTextEdit>
 
 // класс для окна выбора сложности
 class DifficultMenu : public QDialog {
@@ -19,9 +21,11 @@ signals:
     void NormalSelected();
     void HardSelected();
     void InsaneSelected();
+    void SlValChanged(int new_val);
 
 public slots:
     void closeWindow();
+    void changeValue();
 
 private: // какие кнопки будут
     QPushButton* Easy;
@@ -29,6 +33,8 @@ private: // какие кнопки будут
     QPushButton* Hard;
     QPushButton* Insane;
     QPushButton* Exit;
+    QTextEdit* SliderValue;
+    QSlider* FormatSlider;
 };
 
 #endif

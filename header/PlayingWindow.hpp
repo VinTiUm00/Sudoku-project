@@ -29,12 +29,14 @@ public slots:
     void startInsane();
     void closeWindow();
     void Victory();
+    void setFormatVal(int new_val);
 
 private:
     QVector<GameCell*> CellButtons;
     QVector<ControlCell*> ControlButtons;
 
     std::vector<std::vector<short int>> Matrix;
+    int format_chance = 45;
     int left2victory = 0;
 };
 

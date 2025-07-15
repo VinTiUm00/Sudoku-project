@@ -117,7 +117,7 @@ void PlayingWindow::startEasy(){
 #ifdef DEBUG
     qDebug() << "startEasy";
 #endif
-    short int mesh_size = 2, format_chance = 50;
+    short int mesh_size = 2;
     this->InitialiseGameField(mesh_size, format_chance);
 
     this->show();
@@ -128,7 +128,7 @@ void PlayingWindow::startNormal(){
 #ifdef DEBUG
     qDebug() << "startNormal";
 #endif
-    short int mesh_size = 3, format_chance = 50;
+    short int mesh_size = 3;
     this->InitialiseGameField(mesh_size, format_chance);
 
     this->show();
@@ -139,7 +139,7 @@ void PlayingWindow::startHard(){
 #ifdef DEBUG
     qDebug() << "startHard";
 #endif
-    short int mesh_size = 4, format_chance = 50;
+    short int mesh_size = 4;
     this->InitialiseGameField(mesh_size, format_chance);
 
     this->show();
@@ -150,7 +150,7 @@ void PlayingWindow::startInsane(){
 #ifdef DEBUG
     qDebug() << "startInsane";
 #endif
-    short int mesh_size = 5, format_chance = 50;
+    short int mesh_size = 5;
     this->InitialiseGameField(mesh_size, format_chance);
 
     this->show();
@@ -171,4 +171,8 @@ void PlayingWindow::Victory(){
     box->setIcon(QMessageBox::Critical);
 
     delete box;
+}
+
+void PlayingWindow::setFormatVal(int new_val){
+    this->format_chance = new_val;
 }
