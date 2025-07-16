@@ -83,7 +83,7 @@ void MainWindow::OpenDifficultMenu(){
     Menu->setWindowTitle("Выбор сложности");
     Menu->resize(350, 200);
     Menu->raise();
-    Menu->show();
+    Menu->exec();
 }
 
 void MainWindow::closeWindow(){
