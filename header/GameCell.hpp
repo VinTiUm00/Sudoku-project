@@ -16,15 +16,18 @@ public:
     void ChangeNum(int num); // изменить число ячейки
     void setfCanChange(bool value); // установить fCanChange
 
+    // Получение необходимых данных о матрице, ее размере, а также позиции ячейки в матрице
     void setPositionMatrix(std::vector<std::vector<short int>> &mesh, short int mesh_size, short int row, short int col);
-    void connectPW(QVector<GameCell*> &GC_vector, int &counter);
-    bool isCellAccord2Rules ();
-    int getLeft();
 
+    void connectPW(QVector<GameCell*> &GC_vector, int &counter); // Связь с вектором этих ячеек, счетчиком заполненности редактируемых ячеек
+    bool isCellAccord2Rules (); // Проверка на корректность установленного значения
+    int getLeft(); // Получение значения счетчика
+
+    // Окраска ячеек
     void setYELLOWclr();
     void setSELFclr();
     void setGREENclr();
-    void setBLUEclr();
+    //void setBLUEclr();
 
 signals:
     void WannaChangeOut(GameCell* Cell);
@@ -33,18 +36,19 @@ public slots:
     void WannaChangeIn();
 
 private:
-    int num = 0;
-    bool fCanChange = false;
+    int num = 0; // Собственное значение
+    bool fCanChange = false; // Флаг редактируемости
 
+    // Позиция, связь с матрицей
     short int row;
     short int col;
     std::vector<std::vector<short int>> *mesh;
     short int mesh_size;
 
-    QVector<GameCell*> *GC_vector;
-    bool isWrongPlace = false;
-    bool isAlreadyBlue = false;
-    int *counter;
+    QVector<GameCell*> *GC_vector; // Вектор этих ячеек
+    bool isWrongPlace = false; // Конфликтует ли значение
+    bool isAlreadyBlue = false; // Ячейка сейчас синяя
+    int *counter; // Счетчик left2victory
 };
 
 #endif

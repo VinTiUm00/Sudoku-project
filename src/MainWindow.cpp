@@ -57,8 +57,10 @@ void MainWindow::OpenDifficultMenu(){
     Menu->setStyleSheet("DifficultMenu { background-color: #282C34; }");
     GameWindow->setStyleSheet("PlayingWindow { background-color: #282C34; }");
 
+    // Привязка сигнала с передачей значения ползунка из Dif Menu в Play Win
     connect(Menu, &DifficultMenu::SlValChanged, GameWindow, &PlayingWindow::setFormatVal);
 
+    // Остальные привязки
     connect(Menu, &DifficultMenu::EasySelected, GameWindow, &PlayingWindow::startEasy);
     connect(Menu, &DifficultMenu::EasySelected, Menu, &DifficultMenu::closeWindow);
     connect(Menu, &DifficultMenu::EasySelected, this, &MainWindow::hideWindow);

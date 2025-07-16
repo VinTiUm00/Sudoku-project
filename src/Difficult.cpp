@@ -22,15 +22,16 @@ DifficultMenu::DifficultMenu(QWidget* parent) : QDialog(parent){
     Exit->setFixedHeight(40);
 
     SliderValue = new QTextEdit();
-    SliderValue->setFixedHeight(31);
-    SliderValue->setReadOnly(true);
+    SliderValue->setFixedHeight(31); // Минимальная высота для 1 строки
+    SliderValue->setReadOnly(true);  // Только для чтения
 
-    FormatSlider = new QSlider(Qt::Horizontal, this);
+    FormatSlider = new QSlider(Qt::Horizontal, this); // Горизонтальный ползунок
     FormatSlider->setFixedHeight(30);
-    FormatSlider->setMaximum(70);
-    FormatSlider->setMinimum(20);
-    FormatSlider->setValue(45);
+    FormatSlider->setMaximum(70); // Максимальное значение
+    FormatSlider->setMinimum(20); // Минимальное значение
+    FormatSlider->setValue(45);   // Значение по умолчанию
 
+    // Чтобы текст был сразу
     this->changeValue();
 
     // кастомизация
@@ -73,6 +74,7 @@ void DifficultMenu::closeWindow(){
     this->close();
 }
 
+// Обновление текста + передача сигнала
 void DifficultMenu::changeValue(){
     this->SliderValue->setText(QString::fromStdString("Количество пустых клеток в сетке: " + std::to_string(this->FormatSlider->value()) + "%."));
     emit SlValChanged(this->FormatSlider->value());

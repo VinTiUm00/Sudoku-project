@@ -15,33 +15,44 @@ GameCell::GameCell(QWidget* parent, short int num) : QPushButton(parent){
 
 GameCell::~GameCell() = default;
 
+// Изменение значения ячейки
 void GameCell::ChangeNum(int num){
     if (this->fCanChange == true){
+        // Проверка на попытку присвоить то же значение
         if (this->num == num){
             return;
         }
 
+        // Изменение значения
         this->num = num;
         (*(this->mesh))[this->row][this->col] = num;
         this->setText(QString::number(num));
         
+        // Проверка на корректность
         if (!(this->isCellAccord2Rules())){
+            // Конфликтует - в красный
             this->setStyleSheet("GameCell { background-color: #AF505A; color: black; font-weight: 900; }");
 
+            // Прибавление счетчика, если цвет сменился с синего на красный
             if (this->isAlreadyBlue){
                 (*counter)++;
             }
             this->isWrongPlace = true;
             this->isAlreadyBlue = false;
         }
-        else {
+        else { // Синий - значение не конфликтует
             this->setStyleSheet("GameCell { background-color: #61AFEF; color: black; font-weight: 900; }");
+
+            // Проверка на предыдущее состояние
+            if (!this->isAlreadyBlue){
+                (*counter)--;
+            }
             this->isWrongPlace = false;
             this->isAlreadyBlue = true;
-            (*counter)--;
         }
     }
     else{
+        // Сообщение о невозможности редактирования
         QMessageBox* box = new QMessageBox;
         box->setText("Нельзя менять!");
         box->exec();
@@ -55,10 +66,12 @@ void GameCell::WannaChangeIn(){
     emit WannaChangeOut(this);
 }
 
+// Изменение редактируемости
 void GameCell::setfCanChange(bool value){
     this->fCanChange = value;
 }
 
+// Получение ссылки на матрицу, положение в матрице
 void GameCell::setPositionMatrix(std::vector<std::vector<short int>> &mesh, short int mesh_size, short int row, short int col){
     this->mesh = &mesh;
     this->mesh_size = mesh_size;
@@ -66,13 +79,15 @@ void GameCell::setPositionMatrix(std::vector<std::vector<short int>> &mesh, shor
     this->col = col;
 }
 
+// Связь с вектором этих ячеек, счетчиком
 void GameCell::connectPW(QVector<GameCell*> &GC_vector, int &counter){
     this->GC_vector = &GC_vector;
     this->counter = &counter;
 }
 
+// Проверка на конфликт // Закомментированный код возможно пригодится позже
 bool GameCell::isCellAccord2Rules (){
-    bool accord = true;
+    bool accord = true; // Подчиняется правилам
 
     // Check line
     for (short int j = 0; j < this->mesh_size * this->mesh_size; j++){
@@ -136,41 +151,48 @@ bool GameCell::isCellAccord2Rules (){
     return accord;
 }
 
+// Окраска в желтый
 void GameCell::setYELLOWclr(){
-    if (!this->isWrongPlace){
+    if (!this->isWrongPlace){ // Красные не перекрашиваем
         this->setStyleSheet("GameCell { background-color: #dbe45c; color: black; font-weight: 900; }");
 
-        if (this->isAlreadyBlue){
+        if (this->isAlreadyBlue){ // Теперь эта ячейка под сомнением
             this->isAlreadyBlue = false;
             (*counter)++;
         }
     }
 }
 
+// Окраска в "свой" цвет // Для возврата в исходное состояние
 void GameCell::setSELFclr(){
-    if (this->fCanChange){
-        if (this->num and !this->isWrongPlace and !this->isAlreadyBlue){
+    if (this->fCanChange){ // Для редактируемых
+        if (this->num and !this->isWrongPlace and !this->isAlreadyBlue){ // Если со значением и желтая
             this->setStyleSheet("GameCell { background-color: #61AFEF; color: black; font-weight: 900; }");
             this->isAlreadyBlue = true;
             (*counter)--;
         }
     }
-    else {
+    else { // Для НЕредактируемых
         this->setStyleSheet("GameCell { background-color: #6e6e6e; color: black; font-weight: 900; }");
     }
 }
 
+// Окраска в зеленый (при полном решении)
 void GameCell::setGREENclr(){
     this->setStyleSheet("GameCell { background-color: #7CD47B; color: black; font-weight: 900; }");
 }
 
+// Окраска в синий (не используется)
+/*
 void GameCell::setBLUEclr(){
     this->setStyleSheet("GameCell { background-color: #61AFEF; color: black; font-weight: 900; }");
     this->isWrongPlace = false;
     this->isAlreadyBlue = true;
     (*counter)--;
 }
+*/
 
+// Получение значения счетчика
 int GameCell::getLeft(){
     return *(this->counter);
 }

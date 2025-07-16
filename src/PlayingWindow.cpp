@@ -7,8 +7,10 @@
 //#define DEBUG
 
 PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){}
+// А вот неправильно ты, дядя Федор, создаешь всё игровое поле при открытии Dif Menu.
+// Вся "колбаса" теперь снизу:
 
-void PlayingWindow::InitialiseGameField(short int mesh_size, short int format_chance){
+void PlayingWindow::InitialiseGameField(short int mesh_size){
     // группировщик
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
@@ -36,12 +38,12 @@ void PlayingWindow::InitialiseGameField(short int mesh_size, short int format_ch
     btnFont->setPointSize(14);
 
     // Почти решенное судоку
-    this->Matrix = Generate(mesh_size, format_chance);
+    this->Matrix = Generate(mesh_size, this->format_chance);
 
     QGridLayout* gridLayoutGame = new QGridLayout();
     gridLayoutGame->setSpacing(2);
 
-    // инициализация игрового поля
+    // инициализация игрового поля // Теперь для любой сетки
     for (int row = 0; row < mesh_size * mesh_size; row++){
         for (int col = 0; col < mesh_size * mesh_size; col++){
             GameCell* button = nullptr;
@@ -51,14 +53,14 @@ void PlayingWindow::InitialiseGameField(short int mesh_size, short int format_ch
                 button->setPositionMatrix(Matrix, mesh_size, row, col);
 
                 button->connectPW(CellButtons, left2victory);
-                this->left2victory++;
+                this->left2victory++; // Подсчет пустых ячеек
             }
             else{ // если не 0, значит ячейка меняться не может
                 button = new GameCell(this, Matrix[row][col]);
                 button->setPositionMatrix(Matrix, mesh_size, row, col);
                 button->setStyleSheet("GameCell { background-color: #6e6e6e; color: black; font-weight: 900;}");
 
-                button->connectPW(CellButtons, left2victory);
+                button->connectPW(CellButtons, left2victory); // Передача связующих переменных
             }
 
             button->setFixedSize(40, 40);
@@ -73,7 +75,7 @@ void PlayingWindow::InitialiseGameField(short int mesh_size, short int format_ch
     }
 
     mainLayout->addLayout(gridLayoutGame);
-    connect(helper, &Helper::left0, this, &PlayingWindow::Victory);
+    connect(helper, &Helper::left0, this, &PlayingWindow::Victory); // Привязка сигнала об обнулении счетчика
 
     // проставка
     QWidget* tmp = new QWidget(this);
@@ -82,7 +84,7 @@ void PlayingWindow::InitialiseGameField(short int mesh_size, short int format_ch
 
     QHBoxLayout* hBoxLayoutControl = new QHBoxLayout();
 
-    // инициализация кнопок управления
+    // инициализация кнопок управления // Теперь для любой сетки
     for (int i = 1; i <= mesh_size * mesh_size; i++){
         ControlCell* button = new ControlCell(i, QString::number(i), this);
 
@@ -102,6 +104,7 @@ void PlayingWindow::InitialiseGameField(short int mesh_size, short int format_ch
     mainLayout->addLayout(hBoxLayoutControl);
 
     helper->setPrevCell(ControlButtons[0]);
+    // Здесь было 9 connect'ов
 
     setLayout(mainLayout);
 }
@@ -114,11 +117,12 @@ void PlayingWindow::closeWindow(){
 }
 
 void PlayingWindow::startEasy(){
-#ifdef DEBUG
-    qDebug() << "startEasy";
+#ifdef DEBUG // Зачем оно тут? Что оно делает?
+    qDebug() << "startEasy"; 
 #endif
-    short int mesh_size = 2;
-    this->InitialiseGameField(mesh_size, format_chance);
+    // Инициализация собственно игрового поля
+    short int mesh_size = 2; // Для наглядности, позже убрать
+    this->InitialiseGameField(mesh_size);
 
     this->show();
     this->raise();
@@ -129,7 +133,7 @@ void PlayingWindow::startNormal(){
     qDebug() << "startNormal";
 #endif
     short int mesh_size = 3;
-    this->InitialiseGameField(mesh_size, format_chance);
+    this->InitialiseGameField(mesh_size);
 
     this->show();
     this->raise();
@@ -140,7 +144,7 @@ void PlayingWindow::startHard(){
     qDebug() << "startHard";
 #endif
     short int mesh_size = 4;
-    this->InitialiseGameField(mesh_size, format_chance);
+    this->InitialiseGameField(mesh_size);
 
     this->show();
     this->raise();
@@ -151,20 +155,22 @@ void PlayingWindow::startInsane(){
     qDebug() << "startInsane";
 #endif
     short int mesh_size = 5;
-    this->InitialiseGameField(mesh_size, format_chance);
+    this->InitialiseGameField(mesh_size);
 
     this->show();
     this->raise();
 }
 
+// Победа (Решение судоку)
 void PlayingWindow::Victory(){
     for (GameCell *CurCell : CellButtons){
-        (*CurCell).setGREENclr();
-        (*CurCell).setfCanChange(false);
+        (*CurCell).setGREENclr(); // Озеленяем поле
+        (*CurCell).setfCanChange(false); // Блокируем возможность менять значения в ячейках
     }
 
-    this->left2victory--;
+    this->left2victory--; // Для отключения сигнала left0
 
+    // Сообщение о победе
     QMessageBox* box = new QMessageBox;
     box->setText("Вы решили судоку!!!");
     box->exec();
@@ -173,6 +179,7 @@ void PlayingWindow::Victory(){
     delete box;
 }
 
+// Изменение шанса на полученное из сигнала
 void PlayingWindow::setFormatVal(int new_val){
     this->format_chance = new_val;
 }

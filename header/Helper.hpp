@@ -17,7 +17,8 @@ public:
     void setPrevCell(ControlCell* Cell); // для принудительного указания предыдущей активной ячейки
 
 signals:
-    void left0();
+    void left0(); // Сигнал об обнулении счетчика незаполненных клеток (left2victory)
+    // Остальные сигналы убраны за ненадобностью (просто в хелпере 1 строчку прописать надо было)
 
 public slots:
     void selectNum(ControlCell* Cell, int num);
