@@ -171,11 +171,12 @@ void PlayingWindow::Victory(){
     this->left2victory--; // Для отключения сигнала left0
 
     // Сообщение о победе
-    QMessageBox* box = new QMessageBox;
-    box->setText("Вы решили судоку!!!");
-    box->setIcon(QMessageBox::Critical);
-    box->exec();
-
+    QMessageBox* box = new QMessageBox(this);
+    box->setText("Вы выиграли!!!");
+    box->setIcon(QMessageBox::Information);
+    int res = box->exec();
+    if (res == QMessageBox::Ok)
+        emit this->windowClosed();
     delete box;
 }
 
