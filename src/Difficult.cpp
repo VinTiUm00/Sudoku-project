@@ -24,6 +24,7 @@ DifficultMenu::DifficultMenu(QWidget* parent) : QDialog(parent){
     SliderValue = new QLabel(this);
     SliderValue->setFixedHeight(31); // Минимальная высота для 1 строки
     SliderValue->setStyleSheet("QLabel { background-color: white; color: black; }");
+    SliderValue->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
     FormatSlider = new QSlider(Qt::Horizontal, this); // Горизонтальный ползунок
     FormatSlider->setFixedHeight(30);

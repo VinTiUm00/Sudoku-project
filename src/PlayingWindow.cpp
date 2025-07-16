@@ -173,8 +173,8 @@ void PlayingWindow::Victory(){
     // Сообщение о победе
     QMessageBox* box = new QMessageBox;
     box->setText("Вы решили судоку!!!");
-    box->exec();
     box->setIcon(QMessageBox::Critical);
+    box->exec();
 
     delete box;
 }
