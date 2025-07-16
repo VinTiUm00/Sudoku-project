@@ -21,9 +21,9 @@ DifficultMenu::DifficultMenu(QWidget* parent) : QDialog(parent){
     Exit = new QPushButton("Назад", this);
     Exit->setFixedHeight(40);
 
-    SliderValue = new QTextEdit();
+    SliderValue = new QLabel(this);
     SliderValue->setFixedHeight(31); // Минимальная высота для 1 строки
-    SliderValue->setReadOnly(true);  // Только для чтения
+    SliderValue->setStyleSheet("QLabel { background-color: white; color: black; }");
 
     FormatSlider = new QSlider(Qt::Horizontal, this); // Горизонтальный ползунок
     FormatSlider->setFixedHeight(30);

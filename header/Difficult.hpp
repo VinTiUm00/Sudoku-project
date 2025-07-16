@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QPushButton>
 #include <QSlider>
-#include <QTextEdit>
+#include <QLabel>
 
 // класс для окна выбора сложности
 class DifficultMenu : public QDialog {
@@ -34,7 +34,7 @@ private:
     QPushButton* Hard;
     QPushButton* Insane;
     QPushButton* Exit;
-    QTextEdit* SliderValue; // Текст
+    QLabel* SliderValue; // Текст
     QSlider* FormatSlider;  // Ползунок
 };
 
