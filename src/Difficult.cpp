@@ -1,6 +1,7 @@
 #include "Difficult.hpp"
 
 #include <QVBoxLayout>
+#include <string>
 
 DifficultMenu::DifficultMenu(QWidget* parent) : QDialog(parent){
 
@@ -20,6 +21,20 @@ DifficultMenu::DifficultMenu(QWidget* parent) : QDialog(parent){
     Exit = new QPushButton("Назад", this);
     Exit->setFixedHeight(40);
 
+    SliderValue = new QLabel(this);
+    SliderValue->setFixedHeight(31); // Минимальная высота для 1 строки
+    SliderValue->setStyleSheet("QLabel { background-color: white; color: black; }");
+    SliderValue->setAlignment(Qt::AlignmentFlag::AlignCenter);
+
+    FormatSlider = new QSlider(Qt::Horizontal, this); // Горизонтальный ползунок
+    FormatSlider->setFixedHeight(30);
+    FormatSlider->setMaximum(70); // Максимальное значение
+    FormatSlider->setMinimum(20); // Минимальное значение
+    FormatSlider->setValue(45);   // Значение по умолчанию
+
+    // Чтобы текст был сразу
+    this->changeValue();
+
     // кастомизация
     Exit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; }");
 
@@ -31,6 +46,8 @@ DifficultMenu::DifficultMenu(QWidget* parent) : QDialog(parent){
     Hard->setFont(*font);
     Insane->setFont(*font);
     Exit->setFont(*font);
+    SliderValue->setFont(*font);
+    FormatSlider->setFont(*font);
 
     // группировка
     QVBoxLayout* layout = new QVBoxLayout(this);
@@ -39,6 +56,8 @@ DifficultMenu::DifficultMenu(QWidget* parent) : QDialog(parent){
     layout->addWidget(Normal);
     layout->addWidget(Hard);
     layout->addWidget(Insane);
+    layout->addWidget(SliderValue);
+    layout->addWidget(FormatSlider);
     layout->addWidget(Exit);
 
     // коннекты
@@ -47,6 +66,7 @@ DifficultMenu::DifficultMenu(QWidget* parent) : QDialog(parent){
     connect(Normal, &QPushButton::clicked, this, &DifficultMenu::NormalSelected);
     connect(Hard, &QPushButton::clicked, this, &DifficultMenu::HardSelected);
     connect(Insane, &QPushButton::clicked, this, &DifficultMenu::InsaneSelected);
+    connect(FormatSlider, &QSlider::valueChanged, this, &DifficultMenu::changeValue);
 }
 
 DifficultMenu::~DifficultMenu() = default;
@@ -54,3 +74,10 @@ DifficultMenu::~DifficultMenu() = default;
 void DifficultMenu::closeWindow(){
     this->close();
 }
+
+// Обновление текста + передача сигнала
+void DifficultMenu::changeValue(){
+    this->SliderValue->setText(QString::fromStdString("Количество пустых клеток в сетке: " + std::to_string(this->FormatSlider->value()) + "%."));
+    emit SlValChanged(this->FormatSlider->value());
+}
+

@@ -1,14 +1,16 @@
 #include <QMessageBox>
 
 #include "PlayingWindow.hpp"
-#include "GameCell.hpp"
-#include "ControlCell.hpp"
 #include "Helper.hpp"
 #include "Generator.hpp"
 
 //#define DEBUG
 
-PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
+PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){}
+// А вот неправильно ты, дядя Федор, создаешь всё игровое поле при открытии Dif Menu.
+// Вся "колбаса" теперь снизу:
+
+void PlayingWindow::InitialiseGameField(short int mesh_size){
     // группировщик
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
@@ -36,15 +38,14 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     btnFont->setPointSize(14);
 
     // Почти решенное судоку
-    short int mesh_size = 3, format_chance = 50;
-    this->Matrix = Generate(mesh_size, format_chance);
+    this->Matrix = Generate(mesh_size, this->format_chance);
 
     QGridLayout* gridLayoutGame = new QGridLayout();
     gridLayoutGame->setSpacing(2);
 
-    // инициализация игрового поля
-    for (int row = 0; row < 9; row++){
-        for (int col = 0; col < 9; col++){
+    // инициализация игрового поля // Теперь для любой сетки
+    for (int row = 0; row < mesh_size * mesh_size; row++){
+        for (int col = 0; col < mesh_size * mesh_size; col++){
             GameCell* button = nullptr;
 
             if (Matrix[row][col] == 0){ // если в Martix 0, значит его нужно решить
@@ -52,14 +53,14 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
                 button->setPositionMatrix(Matrix, mesh_size, row, col);
 
                 button->connectPW(CellButtons, left2victory);
-                this->left2victory++;
+                this->left2victory++; // Подсчет пустых ячеек
             }
             else{ // если не 0, значит ячейка меняться не может
                 button = new GameCell(this, Matrix[row][col]);
                 button->setPositionMatrix(Matrix, mesh_size, row, col);
                 button->setStyleSheet("GameCell { background-color: #6e6e6e; color: black; font-weight: 900;}");
 
-                button->connectPW(CellButtons, left2victory);
+                button->connectPW(CellButtons, left2victory); // Передача связующих переменных
             }
 
             button->setFixedSize(40, 40);
@@ -74,7 +75,7 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     }
 
     mainLayout->addLayout(gridLayoutGame);
-    connect(helper, &Helper::left0, this, &PlayingWindow::Victory);
+    connect(helper, &Helper::left0, this, &PlayingWindow::Victory); // Привязка сигнала об обнулении счетчика
 
     // проставка
     QWidget* tmp = new QWidget(this);
@@ -83,8 +84,8 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
 
     QHBoxLayout* hBoxLayoutControl = new QHBoxLayout();
 
-    // инициализация кнопок управления
-    for (int i = 1; i < 10; i++){
+    // инициализация кнопок управления // Теперь для любой сетки
+    for (int i = 1; i <= mesh_size * mesh_size; i++){
         ControlCell* button = new ControlCell(i, QString::number(i), this);
 
         // кастомизация управляющих кнопок
@@ -103,17 +104,7 @@ PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){
     mainLayout->addLayout(hBoxLayoutControl);
 
     helper->setPrevCell(ControlButtons[0]);
-
-    // connect'ы
-    connect(helper, &Helper::SelectCell1, ControlButtons[0], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell2, ControlButtons[1], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell3, ControlButtons[2], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell4, ControlButtons[3], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell5, ControlButtons[4], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell6, ControlButtons[5], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell7, ControlButtons[6], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell8, ControlButtons[7], &ControlCell::setActive);
-    connect(helper, &Helper::SelectCell9, ControlButtons[8], &ControlCell::setActive);
+    // Здесь было 9 connect'ов
 
     setLayout(mainLayout);
 }
@@ -126,9 +117,13 @@ void PlayingWindow::closeWindow(){
 }
 
 void PlayingWindow::startEasy(){
-#ifdef DEBUG
-    qDebug() << "startEasy";
+#ifdef DEBUG // Зачем оно тут? Что оно делает?
+    qDebug() << "startEasy"; 
 #endif
+    // Инициализация собственно игрового поля
+    short int mesh_size = 2; // Для наглядности, позже убрать
+    this->InitialiseGameField(mesh_size);
+
     this->show();
     this->raise();
 }
@@ -137,6 +132,9 @@ void PlayingWindow::startNormal(){
 #ifdef DEBUG
     qDebug() << "startNormal";
 #endif
+    short int mesh_size = 3;
+    this->InitialiseGameField(mesh_size);
+
     this->show();
     this->raise();
 }
@@ -145,6 +143,9 @@ void PlayingWindow::startHard(){
 #ifdef DEBUG
     qDebug() << "startHard";
 #endif
+    short int mesh_size = 4;
+    this->InitialiseGameField(mesh_size);
+
     this->show();
     this->raise();
 }
@@ -153,22 +154,33 @@ void PlayingWindow::startInsane(){
 #ifdef DEBUG
     qDebug() << "startInsane";
 #endif
+    short int mesh_size = 5;
+    this->InitialiseGameField(mesh_size);
+
     this->show();
     this->raise();
 }
 
+// Победа (Решение судоку)
 void PlayingWindow::Victory(){
     for (GameCell *CurCell : CellButtons){
-        (*CurCell).setGREENclr();
-        (*CurCell).setfCanChange(false);
+        (*CurCell).setGREENclr(); // Озеленяем поле
+        (*CurCell).setfCanChange(false); // Блокируем возможность менять значения в ячейках
     }
 
-    this->left2victory--;
+    this->left2victory--; // Для отключения сигнала left0
 
-    QMessageBox* box = new QMessageBox;
-    box->setText("Вы решили судоку!!!");
-    box->exec();
-    box->setIcon(QMessageBox::Critical);
-
+    // Сообщение о победе
+    QMessageBox* box = new QMessageBox(this);
+    box->setText("Вы выиграли!!!");
+    box->setIcon(QMessageBox::Information);
+    int res = box->exec();
+    if (res == QMessageBox::Ok)
+        emit this->windowClosed();
     delete box;
+}
+
+// Изменение шанса на полученное из сигнала
+void PlayingWindow::setFormatVal(int new_val){
+    this->format_chance = new_val;
 }

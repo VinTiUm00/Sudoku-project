@@ -35,6 +35,7 @@ qt_wrap_cpp(MOC_FILES ${HEADER_FILE})
 qt_add_executable(${PROJECT_NAME}
     ${SRC_FILES}
     ${MOC_FILES}
+    res/icon.rc
 )
 
 
