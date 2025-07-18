@@ -12,7 +12,15 @@ gcc
 qt6-base
 ```
 
-###### Для Windows потребуется установить [MSYS2](https://www.msys2.org/) и использовать MINGW терминал
+##### Arch
+```
+sudo pacman -S cmake make gcc qt6-base
+```
+
+##### Для Windows потребуется установить [MSYS2](https://www.msys2.org/) и использовать MINGW терминал
+```
+pacman -S mingw-w64-x86_64-cmake make mingw-w64-gcc mingw-w64-qt6-base
+```
 
 ##### склонируйте этот репозиторий к себе на компьютер
 ```
@@ -31,7 +39,7 @@ cmake .. && make
 ```
 ###### Windows
 ```
-cmake -G Unix\ Makefiles .. && make
+cmake -G "Unix Makefiles" .. && make
 ```
 
 ##### Готово. Вы скомпилировали нашу игру. Для запуска откройте файл Sudoku
