@@ -8,22 +8,26 @@ DifficultMenu::DifficultMenu(QWidget* parent) : QDialog(parent){
     // инициализция кнопок
     Easy = new QPushButton("Легкий (4x4)", this);
     Easy->setFixedHeight(40);
+    Easy->setStyleSheet("QPushButton { background-color: #3C3C3C; color: white; }");
 
     Normal = new QPushButton("Средний (9x9)", this);
     Normal->setFixedHeight(40);
+    Normal->setStyleSheet("QPushButton { background-color: #3C3C3C; color: white; }");
 
     Hard = new QPushButton("Сложный (16x16)", this);
     Hard->setFixedHeight(40);
+    Hard->setStyleSheet("QPushButton { background-color: #3C3C3C; color: white; }");
 
     Insane = new QPushButton("Невозможный (25x25)", this);
     Insane->setFixedHeight(40);
+    Insane->setStyleSheet("QPushButton { background-color: #3C3C3C; color: white; }");
 
     Exit = new QPushButton("Назад", this);
     Exit->setFixedHeight(40);
 
     SliderValue = new QLabel(this);
     SliderValue->setFixedHeight(31); // Минимальная высота для 1 строки
-    SliderValue->setStyleSheet("QLabel { background-color: white; color: black; }");
+    SliderValue->setStyleSheet("QLabel { background-color: #3C3C3C; color: white; }");
     SliderValue->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
     FormatSlider = new QSlider(Qt::Horizontal, this); // Горизонтальный ползунок
