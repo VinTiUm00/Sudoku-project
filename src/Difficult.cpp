@@ -6,16 +6,16 @@
 DifficultMenu::DifficultMenu(QWidget* parent) : QDialog(parent){
 
     // инициализция кнопок
-    Easy = new QPushButton("Легкий", this);
+    Easy = new QPushButton("Легкий (4x4)", this);
     Easy->setFixedHeight(40);
 
-    Normal = new QPushButton("Средний", this);
+    Normal = new QPushButton("Средний (9x9)", this);
     Normal->setFixedHeight(40);
 
-    Hard = new QPushButton("Сложный", this);
+    Hard = new QPushButton("Сложный (16x16)", this);
     Hard->setFixedHeight(40);
 
-    Insane = new QPushButton("Невозможный", this);
+    Insane = new QPushButton("Невозможный (25x25)", this);
     Insane->setFixedHeight(40);
 
     Exit = new QPushButton("Назад", this);
