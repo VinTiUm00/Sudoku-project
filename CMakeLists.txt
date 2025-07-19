@@ -16,6 +16,9 @@ set(SRC_FILES # файлы для компиляции
     src/GameCell.cpp
     src/ControlCell.cpp
     src/Helper.cpp
+    src/ScoreWindow.cpp
+    src/ScoreFunctions.cpp
+    src/ScoreLabel.cpp
 )
 
 set(HEADER_FILE # header'ы для MOC (header'ы, где используется макрос Q_OBJECT)
@@ -25,6 +28,8 @@ set(HEADER_FILE # header'ы для MOC (header'ы, где используетс
     header/GameCell.hpp
     header/ControlCell.hpp
     header/Helper.hpp
+    header/ScoreWindow.hpp
+    header/ScoreLabel.hpp
 )
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Widgets) # Поиск QT и его компонентов

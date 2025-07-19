@@ -49,6 +49,8 @@ void GameCell::ChangeNum(int num){
             }
             this->isWrongPlace = false;
             this->isAlreadyBlue = true;
+
+            emit this->addScore(25);
         }
     }
     else{

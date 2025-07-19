@@ -6,8 +6,10 @@
 #include <QPushButton>
 #include <QGridLayout>
 
+#include "Helper.hpp"
 #include "GameCell.hpp"
 #include "ControlCell.hpp"
+#include "ScoreLabel.hpp"
 
 // класс игрового поля
 class PlayingWindow : public QWidget {
@@ -21,6 +23,7 @@ public:
 
 signals:
     void windowClosed();
+    void sayScore(int Score);
 
 public slots:
     void startEasy();
@@ -28,7 +31,7 @@ public slots:
     void startHard();
     void startInsane();
     void closeWindow();
-    void Victory(); // Собственно слот победы
+    void Victory(Helper* helper); // Собственно слот победы
     void setFormatVal(int new_val); // Установка значения из ползунка Dif Menu
 
 private:

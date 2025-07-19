@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QLabel>
+#include <vector>
 
 class MainWindow : public QWidget {
 
@@ -15,15 +16,22 @@ public:
 
 public slots:
     void OpenDifficultMenu();
+    void OpenScoreTable();
     void closeWindow();
     void hideWindow();
     void showWindow();
 
+    void saveScore(int Score);
+
 private: // какие видимые элементы будут
     QLabel* lblMaxScore;
     QPushButton* btnPlay;
-    QPushButton* btnSettings;
+    QPushButton* btnScoreTable;
     QPushButton* btnExit;
+
+    // счет
+    std::vector<int> scoreList;
+    int maxScore = 0;
 };
 
 #endif

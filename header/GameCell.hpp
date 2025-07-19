@@ -31,6 +31,7 @@ public:
 
 signals:
     void WannaChangeOut(GameCell* Cell);
+    void addScore(int num);
 
 public slots:
     void WannaChangeIn();
