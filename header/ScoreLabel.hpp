@@ -1,6 +1,7 @@
 #ifndef SCORELABEL_HPP
 #define SCORELABEL_HPP
 
+// класс для текущего счета в PlayingWindow
 #include <QLabel>
 
 class ScoreLabel : public QLabel{

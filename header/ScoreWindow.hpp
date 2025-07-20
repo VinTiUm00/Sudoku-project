@@ -1,6 +1,8 @@
 #ifndef SCOREWINDOW_HPP
 #define SCOREWINDOW_HPP
 
+// класс для окна со всеми счетами
+
 #include <QWidget>
 #include <QLabel>
 #include <QVector>

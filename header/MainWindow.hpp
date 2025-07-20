@@ -21,7 +21,7 @@ public slots:
     void hideWindow();
     void showWindow();
 
-    void saveScore(int Score);
+    void saveScore(int Score); // сохранение счета в файл
 
 private: // какие видимые элементы будут
     QLabel* lblMaxScore;
@@ -31,7 +31,7 @@ private: // какие видимые элементы будут
 
     // счет
     std::vector<int> scoreList;
-    int maxScore = 0;
+    int maxScore = 0; // вынесен для удобства обновления счета в главном меню
 };
 
 #endif

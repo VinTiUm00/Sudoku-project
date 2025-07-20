@@ -4,6 +4,7 @@
 #include "PlayingWindow.hpp"
 #include "Helper.hpp"
 #include "Generator.hpp"
+#include "ScoreLabel.hpp"
 
 //#define DEBUG
 

@@ -10,7 +10,7 @@ void Helper::selectNum(ControlCell* Cell, int num){
     this->prevCell->setPassive();
     this->setPrevCell(Cell);
     this->CurrentNum = num;
-    Cell->setActive(); // Та самая строчка, которая решает проблему множества сигналов
+    Cell->setActive();
 }
 
 int Helper::SayCurNum(){

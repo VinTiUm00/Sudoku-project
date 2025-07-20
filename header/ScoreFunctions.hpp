@@ -1,6 +1,8 @@
 #ifndef SCORE_HPP
 #define SCORE_HPP
 
+// функции для сохранения/загрузки данных файла со счетами
+
 #include <QStandardPaths>
 #include <QDir>
 #include <QBitArray>
@@ -12,7 +14,7 @@
 
 QString getScoreFilePath(); // получение пути до файла со счетами
 QByteArray simpleEncryptDecrypt(const QByteArray &data, const QString &key); // простая кодировка
-                                                                             //
+                                                                            
 // Сериализация вектора в QByteArray
 QByteArray serializeScores(const std::vector<int>& scores);
 // Десериализация из QByteArray в std::vector

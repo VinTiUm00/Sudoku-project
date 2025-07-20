@@ -45,7 +45,7 @@ QByteArray simpleEncryptDecrypt(const QByteArray &data, const QString &key){
 
 
 bool saveScores(const std::vector<int>& scores, const QString& encryptionKey){
-// Получаем путь к файлу
+    // Получаем путь к файлу
     QString filePath = getScoreFilePath();
     
     // Создаем все необходимые директории
