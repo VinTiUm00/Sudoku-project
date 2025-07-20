@@ -83,7 +83,13 @@ std::vector<std::vector<short int>> Generate (short int mesh_size, short int for
     }
 
     // Formatting cells
-    Format(mesh, mesh_size, format_chance);
+    for (short int x = 0; x < mesh_size * mesh_size; x++){
+        for (short int y = 0; y < mesh_size * mesh_size; y++){
+            if (rand() % 100 < format_chance){
+                mesh[x][y] = 0;
+            }
+        }
+    }
 
     return mesh;
 }
