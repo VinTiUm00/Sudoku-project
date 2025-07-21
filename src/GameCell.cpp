@@ -24,31 +24,31 @@ void GameCell::ChangeNum(int num){
         }
 
         // Изменение значения
+        this->prev_val = this->num;
         this->num = num;
         (*(this->mesh))[this->row][this->col] = num;
         this->setText(QString::number(num));
         
         // Проверка на корректность
-        if (!(this->isCellAccord2Rules())){
+        if (!(this->isCellAccord2Rules(false))){
             // Конфликтует - в красный
             this->setStyleSheet("GameCell { background-color: #AF505A; color: black; font-weight: 900; }");
 
             // Прибавление счетчика, если цвет сменился с синего на красный
-            if (this->isAlreadyBlue){
+            if (this->conflict_level == 'B'){
                 (*counter)++;
             }
-            this->isWrongPlace = true;
-            this->isAlreadyBlue = false;
+            this->conflict_level = 'R';
         }
         else { // Синий - значение не конфликтует
             this->setStyleSheet("GameCell { background-color: #61AFEF; color: black; font-weight: 900; }");
 
             // Проверка на предыдущее состояние
-            if (!this->isAlreadyBlue){
+            if (this->conflict_level != 'B'){
                 (*counter)--;
             }
-            this->isWrongPlace = false;
-            this->isAlreadyBlue = true;
+            this->conflict_level = 'B';
+            this->conflict_counter = 0;
         }
     }
     else{
@@ -85,25 +85,24 @@ void GameCell::connectPW(QVector<GameCell*> &GC_vector, int &counter){
     this->counter = &counter;
 }
 
-// Проверка на конфликт // Закомментированный код возможно пригодится позже
-bool GameCell::isCellAccord2Rules (){
+// Проверка на конфликт
+bool GameCell::isCellAccord2Rules (bool just_check){
     bool accord = true; // Подчиняется правилам
 
     // Check line
     for (short int j = 0; j < this->mesh_size * this->mesh_size; j++){
         if (this->col != j){
-            if (this->num == (*this->mesh)[this->row][j]){
+            if (this->num == (*this->mesh)[this->row][j]){ // Есть конфликт
                 accord = false;
-                (*((*(this->GC_vector))[this->row * mesh_size * mesh_size + j])).setYELLOWclr();
-            }
-            else {
-                (*((*(this->GC_vector))[this->row * mesh_size * mesh_size + j])).setSELFclr();
-                /*
-                if ((*((*(this->GC_vector))[this->row * mesh_size * mesh_size + j])).isWrongPlace and
-                (*((*(this->GC_vector))[this->row * mesh_size * mesh_size + j])).isCellAccord2Rules()){
-                    (*((*(this->GC_vector))[this->row * mesh_size * mesh_size + j])).setBLUEclr();
+                if (!just_check){
+                    (*((*(this->GC_vector))[this->row * mesh_size * mesh_size + j])).setYELLOWclr();
                 }
-                */
+            }
+            else if (!just_check // Не конфликтует сейчас/больше
+            and this->prev_val == (*this->mesh)[this->row][j]
+            and ((*((*(this->GC_vector))[this->row * mesh_size * mesh_size + j])).get_conflict_level() == 'Y'
+            or   (*((*(this->GC_vector))[this->row * mesh_size * mesh_size + j])).get_conflict_level() == 'R')){
+                 (*((*(this->GC_vector))[this->row * mesh_size * mesh_size + j])).setSELFclr();
             }
         }
     }
@@ -111,18 +110,17 @@ bool GameCell::isCellAccord2Rules (){
     // Check column
     for (short int i = 0; i < this->mesh_size * this->mesh_size; i++){
         if (this->row != i){
-            if (this->num == (*this->mesh)[i][this->col]){
+            if (this->num == (*this->mesh)[i][this->col]){ // Есть конфликт
                 accord = false;
-                (*((*(this->GC_vector))[i * mesh_size * mesh_size + this->col])).setYELLOWclr();
-            }
-            else {
-                (*((*(this->GC_vector))[i * mesh_size * mesh_size + this->col])).setSELFclr();
-                /*
-                if ((*((*(this->GC_vector))[i * mesh_size * mesh_size + this->col])).isWrongPlace and
-                (*((*(this->GC_vector))[i * mesh_size * mesh_size + this->col])).isCellAccord2Rules()){
-                    (*((*(this->GC_vector))[i * mesh_size * mesh_size + this->col])).setBLUEclr();
+                if (!just_check){
+                    (*((*(this->GC_vector))[i * mesh_size * mesh_size + this->col])).setYELLOWclr();
                 }
-                */
+            }
+            else if (!just_check // Не конфликтует сейчас/больше
+            and this->prev_val == (*this->mesh)[i][this->col]
+            and ((*((*(this->GC_vector))[i * mesh_size * mesh_size + this->col])).get_conflict_level() == 'Y'
+            or   (*((*(this->GC_vector))[i * mesh_size * mesh_size + this->col])).get_conflict_level() == 'R')){
+                 (*((*(this->GC_vector))[i * mesh_size * mesh_size + this->col])).setSELFclr();
             }
         }
     }
@@ -131,18 +129,17 @@ bool GameCell::isCellAccord2Rules (){
     for (short int i = this->row / this->mesh_size * this->mesh_size; i < (this->row / this->mesh_size + 1) * this->mesh_size; i++){
         for (short int j = this->col / this->mesh_size * this->mesh_size; j < (this->col / this->mesh_size + 1) * this->mesh_size; j++){
             if (this->row != i or this->col != j){
-                if (this->num == (*this->mesh)[i][j]){
+                if (this->num == (*this->mesh)[i][j]){ // Есть конфликт
                     accord = false;
-                    (*((*(this->GC_vector))[i * mesh_size * mesh_size + j])).setYELLOWclr();
-                }
-                else {
-                    (*((*(this->GC_vector))[i * mesh_size * mesh_size + j])).setSELFclr();
-                    /*
-                    if ((*((*(this->GC_vector))[i * mesh_size * mesh_size + j])).isWrongPlace and
-                    (*((*(this->GC_vector))[i * mesh_size * mesh_size + j])).isCellAccord2Rules()){
-                        (*((*(this->GC_vector))[i * mesh_size * mesh_size + j])).setBLUEclr();
+                    if (!just_check){
+                        (*((*(this->GC_vector))[i * mesh_size * mesh_size + j])).setYELLOWclr();
                     }
-                    */
+                }
+                else if (!just_check // Не конфликтует сейчас/больше
+                and this->prev_val == (*this->mesh)[i][j]
+                and ((*((*(this->GC_vector))[i * mesh_size * mesh_size + j])).get_conflict_level() == 'Y'
+                or   (*((*(this->GC_vector))[i * mesh_size * mesh_size + j])).get_conflict_level() == 'R')){
+                     (*((*(this->GC_vector))[i * mesh_size * mesh_size + j])).setSELFclr();
                 }
             }
         }
@@ -153,27 +150,43 @@ bool GameCell::isCellAccord2Rules (){
 
 // Окраска в желтый
 void GameCell::setYELLOWclr(){
-    if (!this->isWrongPlace){ // Красные не перекрашиваем
+    if (this->conflict_level != 'R'){ // Красные не перекрашиваем
         this->setStyleSheet("GameCell { background-color: #dbe45c; color: black; font-weight: 900; }");
 
-        if (this->isAlreadyBlue){ // Теперь эта ячейка под сомнением
-            this->isAlreadyBlue = false;
+        if (this->conflict_level == 'B'){ // Теперь эта ячейка под сомнением
             (*counter)++;
         }
+        this->conflict_level = 'Y';
     }
+    this->conflict_counter++;
 }
 
 // Окраска в "свой" цвет // Для возврата в исходное состояние
 void GameCell::setSELFclr(){
-    if (this->fCanChange){ // Для редактируемых
-        if (this->num and !this->isWrongPlace and !this->isAlreadyBlue){ // Если со значением и желтая
-            this->setStyleSheet("GameCell { background-color: #61AFEF; color: black; font-weight: 900; }");
-            this->isAlreadyBlue = true;
-            (*counter)--;
-        }
+    // Чтобы не уйти в минус
+    if (this->conflict_counter){
+        this->conflict_counter--;
     }
-    else { // Для НЕредактируемых
-        this->setStyleSheet("GameCell { background-color: #6e6e6e; color: black; font-weight: 900; }");
+
+    // Перекраска + цепная проверка
+    if (this->conflict_counter == 0){
+        if (this->fCanChange){ // Для редактируемых
+            if (this->conflict_level == 'Y'){
+                this->setStyleSheet("GameCell { background-color: #61AFEF; color: black; font-weight: 900; }");
+                (*counter)--;
+                this->conflict_level = 'B';
+            }
+            else if (this->conflict_level == 'R' and this->isCellAccord2Rules()){
+                this->isCellAccord2Rules(false); // Цепная проверка
+                this->setStyleSheet("GameCell { background-color: #61AFEF; color: black; font-weight: 900; }");
+                (*counter)--;
+                this->conflict_level = 'B';
+            }
+        }
+        else { // Для НЕредактируемых
+            this->setStyleSheet("GameCell { background-color: #6e6e6e; color: black; font-weight: 900; }");
+            this->conflict_level = 'G';
+        }
     }
 }
 
@@ -182,17 +195,11 @@ void GameCell::setGREENclr(){
     this->setStyleSheet("GameCell { background-color: #7CD47B; color: black; font-weight: 900; }");
 }
 
-// Окраска в синий (не используется)
-/*
-void GameCell::setBLUEclr(){
-    this->setStyleSheet("GameCell { background-color: #61AFEF; color: black; font-weight: 900; }");
-    this->isWrongPlace = false;
-    this->isAlreadyBlue = true;
-    (*counter)--;
-}
-*/
-
 // Получение значения счетчика
 int GameCell::getLeft(){
     return *(this->counter);
+}
+
+char GameCell::get_conflict_level(){
+    return this->conflict_level;
 }

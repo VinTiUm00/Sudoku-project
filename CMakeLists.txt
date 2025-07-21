@@ -11,7 +11,6 @@ set(SRC_FILES # файлы для компиляции
     src/Difficult.cpp
     src/Generator.cpp
     src/MatrixFunctions.cpp
-    src/Formatter.cpp
     src/PlayingWindow.cpp
     src/GameCell.cpp
     src/ControlCell.cpp
