@@ -29,6 +29,8 @@ public:
     void setGREENclr();
 
     char get_conflict_level(); // Получения уровня конфликта
+    void replace_StyleSheet(int pos, int count, QString string); // Изменение StyleSheet
+    int get_num();
 
 signals:
     void WannaChangeOut(GameCell* Cell);

@@ -28,8 +28,10 @@ public slots:
     void startHard();
     void startInsane();
     void closeWindow();
+
     void Victory(); // Собственно слот победы
     void setFormatVal(int new_val); // Установка значения из ползунка Dif Menu
+    void Highlight(ControlCell *CCell, int val);
 
 private:
     QVector<GameCell*> CellButtons;

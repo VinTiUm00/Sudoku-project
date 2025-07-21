@@ -32,7 +32,7 @@ void GameCell::ChangeNum(int num){
         // Проверка на корректность
         if (!(this->isCellAccord2Rules(false))){
             // Конфликтует - в красный
-            this->setStyleSheet("GameCell { background-color: #AF505A; color: black; font-weight: 900; }");
+            this->replace_StyleSheet(29, 7, "#AF505A");
 
             // Прибавление счетчика, если цвет сменился с синего на красный
             if (this->conflict_level == 'B'){
@@ -41,7 +41,7 @@ void GameCell::ChangeNum(int num){
             this->conflict_level = 'R';
         }
         else { // Синий - значение не конфликтует
-            this->setStyleSheet("GameCell { background-color: #61AFEF; color: black; font-weight: 900; }");
+            this->replace_StyleSheet(29, 7, "#61AFEF");
 
             // Проверка на предыдущее состояние
             if (this->conflict_level != 'B'){
@@ -151,7 +151,7 @@ bool GameCell::isCellAccord2Rules (bool just_check){
 // Окраска в желтый
 void GameCell::setYELLOWclr(){
     if (this->conflict_level != 'R'){ // Красные не перекрашиваем
-        this->setStyleSheet("GameCell { background-color: #dbe45c; color: black; font-weight: 900; }");
+        this->replace_StyleSheet(29, 7, "#DBE45C");
 
         if (this->conflict_level == 'B'){ // Теперь эта ячейка под сомнением
             (*counter)++;
@@ -172,19 +172,19 @@ void GameCell::setSELFclr(){
     if (this->conflict_counter == 0){
         if (this->fCanChange){ // Для редактируемых
             if (this->conflict_level == 'Y'){
-                this->setStyleSheet("GameCell { background-color: #61AFEF; color: black; font-weight: 900; }");
+                this->replace_StyleSheet(29, 7, "#61AFEF");
                 (*counter)--;
                 this->conflict_level = 'B';
             }
             else if (this->conflict_level == 'R' and this->isCellAccord2Rules()){
                 this->isCellAccord2Rules(false); // Цепная проверка
-                this->setStyleSheet("GameCell { background-color: #61AFEF; color: black; font-weight: 900; }");
+                this->replace_StyleSheet(29, 7, "#61AFEF");
                 (*counter)--;
                 this->conflict_level = 'B';
             }
         }
         else { // Для НЕредактируемых
-            this->setStyleSheet("GameCell { background-color: #6e6e6e; color: black; font-weight: 900; }");
+            this->replace_StyleSheet(29, 7, "#6E6E6E");
             this->conflict_level = 'G';
         }
     }
@@ -192,7 +192,7 @@ void GameCell::setSELFclr(){
 
 // Окраска в зеленый (при полном решении)
 void GameCell::setGREENclr(){
-    this->setStyleSheet("GameCell { background-color: #7CD47B; color: black; font-weight: 900; }");
+    this->replace_StyleSheet(29, 7, "#7CD47B");
 }
 
 // Получение значения счетчика
@@ -200,6 +200,19 @@ int GameCell::getLeft(){
     return *(this->counter);
 }
 
+// Получение conflict_level
 char GameCell::get_conflict_level(){
     return this->conflict_level;
+}
+
+// Изменение StyleSheet
+void GameCell::replace_StyleSheet(int pos, int count, QString string){
+    QString StyleSheet = this->styleSheet();
+    StyleSheet.replace(pos, count, string);
+    this->setStyleSheet(StyleSheet);
+}
+
+// Получение значения ячейки
+int GameCell::get_num(){
+    return this->num;
 }

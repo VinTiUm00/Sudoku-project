@@ -51,6 +51,7 @@ void PlayingWindow::InitialiseGameField(short int mesh_size){
             if (Matrix[row][col] == 0){ // если в Martix 0, значит его нужно решить
                 button = new GameCell(this, true);
                 button->setPositionMatrix(Matrix, mesh_size, row, col);
+                button->setStyleSheet("GameCell { background-color: #3C3C3C; color: #000000; font-weight: 900; }");
 
                 button->connectPW(CellButtons, left2victory);
                 this->left2victory++; // Подсчет пустых ячеек
@@ -58,7 +59,7 @@ void PlayingWindow::InitialiseGameField(short int mesh_size){
             else{ // если не 0, значит ячейка меняться не может
                 button = new GameCell(this, Matrix[row][col]);
                 button->setPositionMatrix(Matrix, mesh_size, row, col);
-                button->setStyleSheet("GameCell { background-color: #6e6e6e; color: black; font-weight: 900;}");
+                button->setStyleSheet("GameCell { background-color: #6E6E6E; color: #000000; font-weight: 900; }");
 
                 button->connectPW(CellButtons, left2victory); // Передача связующих переменных
             }
@@ -97,6 +98,7 @@ void PlayingWindow::InitialiseGameField(short int mesh_size){
 
         // выбор числа, которое будем вставлять в игровую ячейку
         connect(button, &ControlCell::selectNum, helper, &Helper::selectNum);
+        connect(button, &ControlCell::selectNum, this, &PlayingWindow::Highlight);
 
         ControlButtons.append(button);
     }
@@ -183,4 +185,16 @@ void PlayingWindow::Victory(){
 // Изменение шанса на полученное из сигнала
 void PlayingWindow::setFormatVal(int new_val){
     this->format_chance = new_val;
+}
+
+// Подсвечивание чисел ячеек, равных выбранному значению
+void PlayingWindow::Highlight(ControlCell *CCell, int val){
+    for (GameCell *Cell : this->CellButtons){
+        if (val == (*Cell).get_num()){
+            (*Cell).replace_StyleSheet(45, 7, "#FFFFFF");
+        }
+        else {
+            (*Cell).replace_StyleSheet(45, 7, "#000000");
+        }
+    }
 }
