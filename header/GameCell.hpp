@@ -20,14 +20,17 @@ public:
     void setPositionMatrix(std::vector<std::vector<short int>> &mesh, short int mesh_size, short int row, short int col);
 
     void connectPW(QVector<GameCell*> &GC_vector, int &counter); // Связь с вектором этих ячеек, счетчиком заполненности редактируемых ячеек
-    bool isCellAccord2Rules (); // Проверка на корректность установленного значения
+    bool isCellAccord2Rules (bool just_check = true); // Проверка на корректность установленного значения
     int getLeft(); // Получение значения счетчика
 
     // Окраска ячеек
     void setYELLOWclr();
     void setSELFclr();
     void setGREENclr();
-    //void setBLUEclr();
+
+    char get_conflict_level(); // Получения уровня конфликта
+    void replace_StyleSheet(int pos, int count, QString string); // Изменение StyleSheet
+    int get_num();
 
 signals:
     void WannaChangeOut(GameCell* Cell);
@@ -47,9 +50,10 @@ private:
     short int mesh_size;
 
     QVector<GameCell*> *GC_vector; // Вектор этих ячеек
-    bool isWrongPlace = false; // Конфликтует ли значение
-    bool isAlreadyBlue = false; // Ячейка сейчас синяя
+    char conflict_level = 'G'; // G - Серый / B - Синий / Y - Желтый / R - Красный
+    short int conflict_counter = 0; // Счетчик конфликтов с данной ячейкой
     int *counter; // Счетчик left2victory
+    short int prev_val = 0; // Предыдущее значение
 };
 
 #endif
