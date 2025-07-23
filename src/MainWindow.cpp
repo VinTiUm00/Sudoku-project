@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent){
     btnPlay->setStyleSheet("QPushButton { background-color: #7CD47B; color: white; font-size: 16px; }");
 
     btnScoreTable->setFixedHeight(50);
-    btnScoreTable->setStyleSheet("QPushButton { font-size: 16px; }");
+    btnScoreTable->setStyleSheet("QPushButton { background-color: #4F4F4F; color: white; font-size: 16px; }");
 
     btnExit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; font-size: 16px; }");
 
