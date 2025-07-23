@@ -47,6 +47,9 @@ void GameCell::ChangeNum(int num){
             if (this->conflict_level != 'B'){
                 (*counter)--;
             }
+
+            emit this->addScore(25);
+
             this->conflict_level = 'B';
             this->conflict_counter = 0;
         }

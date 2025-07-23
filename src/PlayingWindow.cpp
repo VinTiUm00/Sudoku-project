@@ -22,7 +22,8 @@ void PlayingWindow::InitialiseGameField(short int mesh_size){
     mainLayout->addWidget(btnExit);
     connect(btnExit, &QPushButton::clicked, this, &PlayingWindow::closeWindow);
 
-    btnExit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; font-size: 12px; }");
+    btnExit->setFixedHeight(40);
+    btnExit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; font-size: 18px; }");
 
     // текущий счет
     ScoreLabel* currentScore = new ScoreLabel(QString::number(helper->sayCurScore()), this);
@@ -55,7 +56,6 @@ void PlayingWindow::InitialiseGameField(short int mesh_size){
                 button->setPositionMatrix(Matrix, mesh_size, row, col);
                 button->setStyleSheet("GameCell { background-color: #3C3C3C; color: #000000; font-weight: 900; }");
 
-                button->connectPW(CellButtons, left2victory);
                 this->left2victory++; // Подсчет пустых ячеек
             }
             else{ // если не 0, значит ячейка меняться не может
@@ -63,18 +63,27 @@ void PlayingWindow::InitialiseGameField(short int mesh_size){
                 button->setPositionMatrix(Matrix, mesh_size, row, col);
                 button->setStyleSheet("GameCell { background-color: #6E6E6E; color: #000000; font-weight: 900; }");
 
-                button->connectPW(CellButtons, left2victory); // Передача связующих переменных
             }
 
+            button->connectPW(CellButtons, left2victory); // Передача связующих переменных // вынесено в общую инициализацию
             button->setFixedSize(40, 40);
             button->setFont(*btnFont);
 
-            gridLayoutGame->addWidget(button, row, col);
+            gridLayoutGame->addWidget(button, row, col, Qt::AlignTop);
 
             connect(button, &GameCell::WannaChangeOut, helper, &Helper::ChangeCell);
             connect(button, &GameCell::addScore, helper, &Helper::ChangeScore);
 
             CellButtons.append(button);
+
+            if (col % mesh_size == mesh_size - 1){
+                QSpacerItem* hspacer = new QSpacerItem(50, 0, QSizePolicy::Fixed, QSizePolicy::Minimum);
+                gridLayoutGame->addItem(hspacer, row, col);
+            }
+        }
+        if (row % mesh_size == mesh_size - 1){
+            QSpacerItem* vspacer = new QSpacerItem(0, 50, QSizePolicy::Minimum, QSizePolicy::Fixed);
+            gridLayoutGame->addItem(vspacer, row, 0, 1, mesh_size+(mesh_size-1));
         }
     }
 
