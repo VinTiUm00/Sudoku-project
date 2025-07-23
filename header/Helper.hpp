@@ -1,7 +1,7 @@
 #ifndef HELPER_HPP
 #define HELPER_HPP
 
-#include <QObject>
+#include <QTimer>
 
 #include "ControlCell.hpp"
 #include "GameCell.hpp"
@@ -20,17 +20,21 @@ public:
 signals:
     void left0(Helper* helper); // Сигнал об обнулении счетчика незаполненных клеток (left2victory)
     void updateCurScore(int newScore); // Обновление ScoreLabel
+    void koefChanged();
 
 public slots:
     void selectNum(ControlCell* Cell, int num);
     void ChangeCell(GameCell* Cell);
     void ChangeScore(int AddScore); // добавление счета
+    void decreaseKoef();
 
 private:
     ControlCell* prevCell;
     int CurrentNum;
 
     int currentScore = 0; // текущий счет
+    double koef = 3.0;
+    QTimer* timer;
 };
 
 #endif

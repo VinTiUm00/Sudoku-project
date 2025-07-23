@@ -4,6 +4,9 @@
 
 Helper::Helper(int num){
     this->CurrentNum = num;
+    this->timer = new QTimer(this);
+    connect(this->timer, &QTimer::timeout, this, &Helper::decreaseKoef);
+    timer->start(45000); // каждые 45 секунд множитель уменьшается на 0.2
 }
 
 void Helper::selectNum(ControlCell* Cell, int num){
@@ -44,7 +47,13 @@ int Helper::sayCurScore(){
     return this->currentScore;
 }
 
+void Helper::decreaseKoef(){
+    if (this->koef > 0.2){
+        this->koef -= 0.2;
+    }
+}
+
 void Helper::ChangeScore(int AddScore){
-    this->currentScore += AddScore;
+    this->currentScore += (AddScore * this->koef);
     emit updateCurScore(this->currentScore);
 }
