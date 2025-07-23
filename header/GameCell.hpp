@@ -34,6 +34,7 @@ public:
 
 signals:
     void WannaChangeOut(GameCell* Cell);
+    void addScore(int num); // добавление счета к текущему
 
 public slots:
     void WannaChangeIn();

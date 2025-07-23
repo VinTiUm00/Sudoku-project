@@ -15,18 +15,22 @@ public:
     Helper(int num);
     int SayCurNum(); // говорит текущее выбранное число (для debug'а)
     void setPrevCell(ControlCell* Cell); // для принудительного указания предыдущей активной ячейки
+    int sayCurScore(); // говорит текущий счет
 
 signals:
-    void left0(); // Сигнал об обнулении счетчика незаполненных клеток (left2victory)
-    // Остальные сигналы убраны за ненадобностью (просто в хелпере 1 строчку прописать надо было)
+    void left0(Helper* helper); // Сигнал об обнулении счетчика незаполненных клеток (left2victory)
+    void updateCurScore(int newScore); // Обновление ScoreLabel
 
 public slots:
     void selectNum(ControlCell* Cell, int num);
     void ChangeCell(GameCell* Cell);
+    void ChangeScore(int AddScore); // добавление счета
 
 private:
     ControlCell* prevCell;
     int CurrentNum;
+
+    int currentScore = 0; // текущий счет
 };
 
 #endif

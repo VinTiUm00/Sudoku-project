@@ -10,7 +10,7 @@ void Helper::selectNum(ControlCell* Cell, int num){
     this->prevCell->setPassive();
     this->setPrevCell(Cell);
     this->CurrentNum = num;
-    Cell->setActive(); // Та самая строчка, которая решает проблему множества сигналов
+    Cell->setActive();
 }
 
 int Helper::SayCurNum(){
@@ -35,7 +35,16 @@ void Helper::ChangeCell(GameCell* Cell){
 
         // Проверка на решенность
         if (!Cell->getLeft()){
-            emit left0();
+            emit left0(this);
         }
     }
+}
+
+int Helper::sayCurScore(){
+    return this->currentScore;
+}
+
+void Helper::ChangeScore(int AddScore){
+    this->currentScore += AddScore;
+    emit updateCurScore(this->currentScore);
 }

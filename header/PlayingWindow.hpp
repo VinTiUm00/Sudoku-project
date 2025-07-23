@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 
+#include "Helper.hpp"
 #include "GameCell.hpp"
 #include "ControlCell.hpp"
 
@@ -21,6 +22,7 @@ public:
 
 signals:
     void windowClosed();
+    void sayScore(int Score); // сигнал, который потом кушает MainWindow
 
 public slots:
     void startEasy();
@@ -29,7 +31,7 @@ public slots:
     void startInsane();
     void closeWindow();
 
-    void Victory(); // Собственно слот победы
+    void Victory(Helper* helper); // Собственно слот победы, модифицорован
     void setFormatVal(int new_val); // Установка значения из ползунка Dif Menu
     void Highlight(ControlCell *CCell, int val);
 

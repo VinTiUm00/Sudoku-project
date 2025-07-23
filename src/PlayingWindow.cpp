@@ -1,40 +1,42 @@
 #include <QMessageBox>
+#include <QLabel>
 
 #include "PlayingWindow.hpp"
 #include "Helper.hpp"
 #include "Generator.hpp"
+#include "ScoreLabel.hpp"
 
 //#define DEBUG
 
 PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){}
-// А вот неправильно ты, дядя Федор, создаешь всё игровое поле при открытии Dif Menu.
-// Вся "колбаса" теперь снизу:
 
 void PlayingWindow::InitialiseGameField(short int mesh_size){
     // группировщик
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
+
+    // помощник
+    Helper* helper = new Helper(0);
 
     // кнопка выхода
     QPushButton* btnExit = new QPushButton("Выход", this);
     mainLayout->addWidget(btnExit);
     connect(btnExit, &QPushButton::clicked, this, &PlayingWindow::closeWindow);
 
-    QFont* font = new QFont(btnExit->font());
-    font->setPointSize(12);
-    btnExit->setFont(*font);
-    btnExit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; }");
+    btnExit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; font-size: 12px; }");
 
-    // проставка
-    QWidget* tmp1 = new QWidget(this); // вероятнее всего будет заменен на "текущий счет"
-    tmp1->setFixedHeight(40);
-    mainLayout->addWidget(tmp1);
+    // текущий счет
+    ScoreLabel* currentScore = new ScoreLabel(QString::number(helper->sayCurScore()), this);
+    currentScore->setFixedHeight(40);
+    currentScore->setAlignment(Qt::AlignmentFlag::AlignCenter);
+    currentScore->setStyleSheet("ScoreLabel { color: white; font-size: 16px; }");
+    mainLayout->addWidget(currentScore);
 
-    // помощник
-    Helper* helper = new Helper(0);
+    connect(helper, &Helper::updateCurScore, currentScore, &ScoreLabel::ChangeScore);
 
     // Шрифт для дальнейшего использования
     QPushButton* forFont = new QPushButton();
     QFont* btnFont = new QFont(forFont->font());
+    delete forFont;
     btnFont->setPointSize(14);
 
     // Почти решенное судоку
@@ -70,6 +72,7 @@ void PlayingWindow::InitialiseGameField(short int mesh_size){
             gridLayoutGame->addWidget(button, row, col);
 
             connect(button, &GameCell::WannaChangeOut, helper, &Helper::ChangeCell);
+            connect(button, &GameCell::addScore, helper, &Helper::ChangeScore);
 
             CellButtons.append(button);
         }
@@ -164,13 +167,14 @@ void PlayingWindow::startInsane(){
 }
 
 // Победа (Решение судоку)
-void PlayingWindow::Victory(){
+void PlayingWindow::Victory(Helper* helper){
     for (GameCell *CurCell : CellButtons){
         (*CurCell).setGREENclr(); // Озеленяем поле
         (*CurCell).setfCanChange(false); // Блокируем возможность менять значения в ячейках
     }
 
     this->left2victory--; // Для отключения сигнала left0
+    emit this->sayScore(helper->sayCurScore());
 
     // Сообщение о победе
     QMessageBox* box = new QMessageBox(this);
