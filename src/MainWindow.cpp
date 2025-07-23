@@ -1,52 +1,54 @@
 #include <QVBoxLayout>
 #include <QFont> // для изменнения размера шрифта
+#include <algorithm>
 
 #include "MainWindow.hpp"
 #include "Difficult.hpp"
 #include "PlayingWindow.hpp"
+#include "ScoreWindow.hpp"
+#include "ScoreFunctions.hpp"
 
 MainWindow::MainWindow(QWidget* parent) : QWidget(parent){
+    // получение предыдущих счетов 
+    this->scoreList = loadScores();
+
     QVBoxLayout* layout = new QVBoxLayout(this); // Группировка кнопок
 
     // инициализация текса
+    if (!this->scoreList.empty()){
+        this->maxScore = *(std::max_element(this->scoreList.begin(), this->scoreList.end()));
+    }
     lblMaxScore = new QLabel(this);
-    lblMaxScore->setText(QString("Ваш максимальный счет: "));
+    lblMaxScore->setText(QString("Ваш максимальный счет: " + QString::number(maxScore)));
     lblMaxScore->setFixedHeight(150);
-    lblMaxScore->setStyleSheet("QLabel { color: white; }");
-
-    // изменение размера шрифта
-    QFont* font = new QFont(lblMaxScore->font());
-    font->setPointSize(16);
-    lblMaxScore->setFont(*font);
+    lblMaxScore->setStyleSheet("QLabel { color: white; font-size: 20px; }");
 
     // инициализация кнопок
     btnPlay = new QPushButton("Играть", this);
     btnPlay->setFixedHeight(50);
 
-    btnSettings = new QPushButton("Настройки", this);
+    btnScoreTable = new QPushButton("Статистика", this);
 
     btnExit = new QPushButton("Выход", this);
     btnExit->setFixedHeight(50);
 
     // кастомизация
-    btnPlay->setFont(*font);
-    btnPlay->setStyleSheet("QPushButton { background-color: #7CD47B; color: white }");
+    btnPlay->setStyleSheet("QPushButton { background-color: #7CD47B; color: white; font-size: 16px; }");
 
-    btnSettings->setFixedHeight(50);
-    btnSettings->setFont(*font);
+    btnScoreTable->setFixedHeight(50);
+    btnScoreTable->setStyleSheet("QPushButton { font-size: 16px; }");
 
-    btnExit->setFont(*font);
-    btnExit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; }");
+    btnExit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; font-size: 16px; }");
 
     // добавление в группировку
     layout->addWidget(lblMaxScore);
     layout->addWidget(btnPlay);
-    layout->addWidget(btnSettings);
+    layout->addWidget(btnScoreTable);
     layout->addWidget(btnExit);
 
     connect(btnPlay, &QPushButton::clicked, this, &MainWindow::OpenDifficultMenu);
+    connect(btnScoreTable, &QPushButton::clicked, this, &MainWindow::OpenScoreTable);
     connect(btnExit, &QPushButton::clicked, this, &MainWindow::closeWindow);
-
 }
 
 MainWindow::~MainWindow() = default;
@@ -56,6 +58,9 @@ void MainWindow::OpenDifficultMenu(){
     PlayingWindow* GameWindow = new PlayingWindow();
     Menu->setStyleSheet("DifficultMenu { background-color: #282C34; }");
     GameWindow->setStyleSheet("PlayingWindow { background-color: #282C34; }");
+
+    // Привязка счета
+    connect(GameWindow, &PlayingWindow::sayScore, this, &MainWindow::saveScore);
 
     // Привязка сигнала с передачей значения ползунка из Dif Menu в Play Win
     connect(Menu, &DifficultMenu::SlValChanged, GameWindow, &PlayingWindow::setFormatVal);
@@ -86,6 +91,24 @@ void MainWindow::OpenDifficultMenu(){
     Menu->exec();
 }
 
+void MainWindow::OpenScoreTable(){
+    ScoreWindow* ScoreTable = new ScoreWindow();
+    ScoreTable->setFixedWidth(500);
+    ScoreTable->setStyleSheet("ScoreWindow { background-color: #282C34; }");
+    this->hideWindow();
+
+    connect(ScoreTable, &ScoreWindow::windowClosed, this, &MainWindow::showWindow);
+    connect(ScoreTable, &ScoreWindow::windowClosed, ScoreTable, &QObject::deleteLater);
+
+    ScoreTable->raise();
+    ScoreTable->show();
+}
+
+void MainWindow::saveScore(int Score){
+    this->scoreList.push_back(Score);
+    saveScores(this->scoreList);
+}
+
 void MainWindow::closeWindow(){
     this->close();
 }
@@ -95,5 +118,8 @@ void MainWindow::hideWindow(){
 }
 
 void MainWindow::showWindow(){
+    this->scoreList = loadScores();
+    this->maxScore = *(std::max_element(this->scoreList.begin(), this->scoreList.end()));
+    lblMaxScore->setText(QString("Ваш максимальный счет: " + QString::number(maxScore)));
     this->show();
 }

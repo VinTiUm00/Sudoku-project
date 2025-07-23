@@ -49,6 +49,8 @@ void GameCell::ChangeNum(int num){
             }
             this->isWrongPlace = false;
             this->isAlreadyBlue = true;
+
+            emit this->addScore(25);
         }
     }
     else{
@@ -181,16 +183,6 @@ void GameCell::setSELFclr(){
 void GameCell::setGREENclr(){
     this->setStyleSheet("GameCell { background-color: #7CD47B; color: black; font-weight: 900; }");
 }
-
-// Окраска в синий (не используется)
-/*
-void GameCell::setBLUEclr(){
-    this->setStyleSheet("GameCell { background-color: #61AFEF; color: black; font-weight: 900; }");
-    this->isWrongPlace = false;
-    this->isAlreadyBlue = true;
-    (*counter)--;
-}
-*/
 
 // Получение значения счетчика
 int GameCell::getLeft(){
