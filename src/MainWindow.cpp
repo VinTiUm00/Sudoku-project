@@ -1,20 +1,18 @@
 #include <QVBoxLayout>
-#include <QFont> // для изменнения размера шрифта
 #include <algorithm>
-#include <QFontDatabase>
 
 #include "MainWindow.hpp"
 #include "Difficult.hpp"
 #include "PlayingWindow.hpp"
 #include "ScoreWindow.hpp"
 #include "ScoreFunctions.hpp"
+
 MainWindow::MainWindow(QWidget* parent) : QWidget(parent){
     // получение предыдущих счетов 
     this->scoreList = loadScores();
 
     QVBoxLayout* layout = new QVBoxLayout(this); // Группировка кнопок
 
-    QFontDatabase::addApplicationFont("/res/jazz-let-plain-1-0.ttf");
     QLabel* TextLogo = new QLabel("SUDOKU", this);
     TextLogo->setStyleSheet("QLabel { font-size: 56px; color: white; }");
     TextLogo->setFixedHeight(50);
