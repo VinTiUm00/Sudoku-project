@@ -2,6 +2,18 @@
 
 ## Внешний вид приложения
 
+#### Главное меню
+![Alt Text](./preview/main_menu.png)
+
+#### Таблица счетов
+![Alt Text](./preview/Scores_menu.jpg)
+
+#### Выбор уровня сложности
+![Alt Text](./preview/Dif_Menu.png)
+
+#### Игровое поле
+![Alt Text](./preview/gameplay.png)
+
 ### Установка
 
 #### Зависимости
