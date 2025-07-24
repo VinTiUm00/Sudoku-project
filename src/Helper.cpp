@@ -33,6 +33,9 @@ void Helper::ChangeCell(GameCell* Cell){
 
         delete box;
     }
+    else if (draftMode){
+        Cell->toDraft(this->CurrentNum);
+    }
     else{
         Cell->ChangeNum(this->CurrentNum);
 
@@ -56,4 +59,14 @@ void Helper::decreaseKoef(){
 void Helper::ChangeScore(int AddScore){
     this->currentScore += (AddScore * this->koef);
     emit updateCurScore(this->currentScore);
+}
+
+// Переключение режима черновика
+void Helper::setDraftMode(bool turnOn){
+    if (turnOn){
+        this->draftMode = true;
+    }
+    else {
+        this->draftMode = false;
+    }
 }

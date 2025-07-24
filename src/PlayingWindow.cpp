@@ -52,20 +52,19 @@ void PlayingWindow::InitialiseGameField(short int mesh_size){
             if (Matrix[row][col] == 0){ // если в Martix 0, значит его нужно решить
                 button = new GameCell(this, true);
                 button->setPositionMatrix(Matrix, mesh_size, row, col);
-                button->setStyleSheet("GameCell { background-color: #3C3C3C; color: #000000; font-weight: 900; }");
+                button->setStyleSheet("GameCell { background-color: #3C3C3C; color: #000000; font-weight: 900; font-size: 20px; }");
 
                 this->left2victory++; // Подсчет пустых ячеек
             }
             else{ // если не 0, значит ячейка меняться не может
                 button = new GameCell(this, Matrix[row][col]);
                 button->setPositionMatrix(Matrix, mesh_size, row, col);
-                button->setStyleSheet("GameCell { background-color: #6E6E6E; color: #000000; font-weight: 900; }");
+                button->setStyleSheet("GameCell { background-color: #6E6E6E; color: #000000; font-weight: 900; font-size: 20px; }");
 
             }
 
             button->connectPW(CellButtons, left2victory); // Передача связующих переменных // вынесено в общую инициализацию
             button->setFixedSize(40, 40);
-            button->setFont(*btnFont);
 
             gridLayoutGame->addWidget(button, row, col, Qt::AlignTop);
 
@@ -90,10 +89,15 @@ void PlayingWindow::InitialiseGameField(short int mesh_size){
     mainLayout->addLayout(gridLayoutGame);
     connect(helper, &Helper::left0, this, &PlayingWindow::Victory); // Привязка сигнала об обнулении счетчика
 
-    // проставка
-    QWidget* tmp = new QWidget(this);
-    tmp->setFixedHeight(40);
-    mainLayout->addWidget(tmp);
+    // Черновик
+    QPushButton *draftBtn = new QPushButton("Режим черновика", this);
+    draftBtn->setFixedHeight(40);
+    draftBtn->setFont(*btnFont);
+    draftBtn->setStyleSheet("QPushButton { background-color: #61AFEF; color: #000000; font-weight: 500; }");
+    draftBtn->setCheckable(true);
+    mainLayout->addWidget(draftBtn);
+
+    connect(draftBtn, &QPushButton::toggled, helper, &Helper::setDraftMode);
 
     QHBoxLayout* hBoxLayoutControl = new QHBoxLayout();
 

@@ -30,7 +30,10 @@ public:
 
     char get_conflict_level(); // Получения уровня конфликта
     void replace_StyleSheet(int pos, int count, QString string); // Изменение StyleSheet
-    int get_num();
+    int get_num(); // Получение значения ячейки
+
+    void toDraft(int new_num); // Внесение/удаление из черновика
+    void draftUpdate(); // Обновление ячейки после изменения
 
 signals:
     void WannaChangeOut(GameCell* Cell);
@@ -50,10 +53,13 @@ private:
     short int mesh_size;
 
     QVector<GameCell*> *GC_vector; // Вектор этих ячеек
-    char conflict_level = 'G'; // G - Серый / B - Синий / Y - Желтый / R - Красный
+    char conflict_level = 'G'; // G - Серый / B - Синий / Y - Желтый / R - Красный / P - Фиолетовый
     short int conflict_counter = 0; // Счетчик конфликтов с данной ячейкой
     int *counter; // Счетчик left2victory
     short int prev_val = 0; // Предыдущее значение
+
+    bool draftMode = false; // Использование черновика в ячейке
+    QVector<int> draftValues; // Значения, хранящиеся в режиме черновика
 };
 
 #endif

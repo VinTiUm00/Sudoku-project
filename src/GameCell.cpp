@@ -98,7 +98,7 @@ bool GameCell::isCellAccord2Rules (bool just_check){
         if (this->col != j){
             if (this->num == (*this->mesh)[this->row][j]){ // Есть конфликт
                 accord = false;
-                if (!just_check){
+                if (!just_check and !this->draftMode){
                     (*((*(this->GC_vector))[this->row * mesh_size * mesh_size + j])).setYELLOWclr();
                 }
             }
@@ -116,7 +116,7 @@ bool GameCell::isCellAccord2Rules (bool just_check){
         if (this->row != i){
             if (this->num == (*this->mesh)[i][this->col]){ // Есть конфликт
                 accord = false;
-                if (!just_check){
+                if (!just_check and !this->draftMode){
                     (*((*(this->GC_vector))[i * mesh_size * mesh_size + this->col])).setYELLOWclr();
                 }
             }
@@ -135,7 +135,7 @@ bool GameCell::isCellAccord2Rules (bool just_check){
             if (this->row != i or this->col != j){
                 if (this->num == (*this->mesh)[i][j]){ // Есть конфликт
                     accord = false;
-                    if (!just_check){
+                    if (!just_check and !this->draftMode){
                         (*((*(this->GC_vector))[i * mesh_size * mesh_size + j])).setYELLOWclr();
                     }
                 }
@@ -219,4 +219,92 @@ void GameCell::replace_StyleSheet(int pos, int count, QString string){
 // Получение значения ячейки
 int GameCell::get_num(){
     return this->num;
+}
+
+// Работа с черновыми значениями ячейки
+void GameCell::toDraft(int new_num){
+    if (this->fCanChange){
+        if (this->draftMode){
+            for (int pos = 0; pos < draftValues.size(); pos++){
+                if (draftValues[pos] == new_num){
+                    draftValues.remove(pos);
+                    draftValues.squeeze();
+                    this->draftUpdate();
+                    return;
+                }
+            }
+        }
+        else {
+            this->setStyleSheet("GameCell { background-color: #5D3EB3; color: #000000; font-weight: 900; font-size: 20px; }");
+            this->draftMode = true;
+            
+            if (this->num){
+                this->draftValues.push_back(this->num);
+                this->prev_val = this->num;
+                this->num = 0;
+                this->isCellAccord2Rules(false);
+
+                if (this->conflict_level == 'B'){
+                    this->conflict_level = 'P';
+                    *counter--;
+                    // Тут надо отнять очки (25)
+                }
+            }
+        }
+
+        draftValues.push_back(new_num);
+        draftUpdate();
+    }
+    else {
+        // Сообщение о невозможности использования режима черновика в неактивных ячейках
+        QMessageBox* box = new QMessageBox;
+        box->setText("Черновик нельзя использовать в этой клетке!");
+        box->exec();
+        box->setIcon(QMessageBox::Critical);
+
+        delete box;
+    }
+}
+
+// Обновление отображения в режиме черновика
+void GameCell::draftUpdate(){
+    if (!draftValues.size()){
+        this->draftMode = false;
+        this->setText("");
+        this->replace_StyleSheet(29, 7, "#3C3C3C");
+        return;
+    }
+
+    QString text;
+    int pos = 0, valSize = draftValues.size();
+    double sqSize = sqrt(valSize);
+    for (int str = 0; str < sqSize; str++){
+        for (int col = 0; col < sqSize; col++){
+            if (pos == valSize){
+                break;
+            }
+
+            text.append(std::to_string(draftValues[pos]));
+            pos++;
+
+            if ((col + 1 < sqSize) and (pos < valSize)){
+                text.push_back(' ');
+            }
+        }
+        if (str + 1 < sqSize){
+            text.append("\n");
+        }
+    }
+
+    QString Sheet;
+    int point = 20 / int(sqrt(valSize - 1) + 1) + 20 % int(sqrt(valSize - 1) + 1);
+    if (point / 10){
+        Sheet = "" + QString::number(point);
+    }
+    else {
+        Sheet = " " + QString::number(point);
+    }
+
+    this->replace_StyleSheet(83, 2, Sheet);
+    this->setText(text);
 }

@@ -25,7 +25,7 @@ public slots:
     void selectNum(ControlCell* Cell, int num);
     void ChangeCell(GameCell* Cell);
     void ChangeScore(int AddScore); // добавление счета
-    void decreaseKoef();
+    void setDraftMode(bool turnOn); // Переключение режима черновика
 
 private:
     ControlCell* prevCell;
@@ -34,6 +34,7 @@ private:
     int currentScore = 0; // текущий счет
     double koef = 3.0;
     QTimer* timer;
+    bool draftMode = false;
 };
 
 #endif
