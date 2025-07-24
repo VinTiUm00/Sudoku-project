@@ -1,7 +1,7 @@
 #ifndef HELPER_HPP
 #define HELPER_HPP
 
-#include <QObject>
+#include <QTimer>
 
 #include "ControlCell.hpp"
 #include "GameCell.hpp"
@@ -32,6 +32,8 @@ private:
     int CurrentNum;
 
     int currentScore = 0; // текущий счет
+    double koef = 3.0;
+    QTimer* timer;
     bool draftMode = false;
 };
 

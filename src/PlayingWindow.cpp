@@ -6,8 +6,6 @@
 #include "Generator.hpp"
 #include "ScoreLabel.hpp"
 
-//#define DEBUG
-
 PlayingWindow::PlayingWindow(QWidget* parent) : QWidget(parent){}
 
 void PlayingWindow::InitialiseGameField(short int mesh_size){
@@ -75,11 +73,13 @@ void PlayingWindow::InitialiseGameField(short int mesh_size){
 
             CellButtons.append(button);
 
+            // разделение
             if (col % mesh_size == mesh_size - 1){
                 QSpacerItem* hspacer = new QSpacerItem(50, 0, QSizePolicy::Fixed, QSizePolicy::Minimum);
                 gridLayoutGame->addItem(hspacer, row, col);
             }
         }
+        // разделение
         if (row % mesh_size == mesh_size - 1){
             QSpacerItem* vspacer = new QSpacerItem(0, 50, QSizePolicy::Minimum, QSizePolicy::Fixed);
             gridLayoutGame->addItem(vspacer, row, 0, 1, mesh_size+(mesh_size-1));
@@ -135,9 +135,6 @@ void PlayingWindow::closeWindow(){
 }
 
 void PlayingWindow::startEasy(){
-#ifdef DEBUG // Зачем оно тут? Что оно делает?
-    qDebug() << "startEasy"; 
-#endif
     // Инициализация собственно игрового поля
     short int mesh_size = 2; // Для наглядности, позже убрать
     this->InitialiseGameField(mesh_size);
@@ -147,9 +144,6 @@ void PlayingWindow::startEasy(){
 }
 
 void PlayingWindow::startNormal(){
-#ifdef DEBUG
-    qDebug() << "startNormal";
-#endif
     short int mesh_size = 3;
     this->InitialiseGameField(mesh_size);
 
@@ -158,9 +152,6 @@ void PlayingWindow::startNormal(){
 }
 
 void PlayingWindow::startHard(){
-#ifdef DEBUG
-    qDebug() << "startHard";
-#endif
     short int mesh_size = 4;
     this->InitialiseGameField(mesh_size);
 
@@ -169,9 +160,6 @@ void PlayingWindow::startHard(){
 }
 
 void PlayingWindow::startInsane(){
-#ifdef DEBUG
-    qDebug() << "startInsane";
-#endif
     short int mesh_size = 5;
     this->InitialiseGameField(mesh_size);
 

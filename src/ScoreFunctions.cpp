@@ -1,4 +1,5 @@
 #include "ScoreFunctions.hpp"
+#include <algorithm>
 
 QByteArray serializeScores(const std::vector<int>& scores) {
     QByteArray data;
@@ -19,6 +20,7 @@ std::vector<int> deserializeScores(const QByteArray& data){
     for (quint32 i = 0; i < size; ++i) {
         stream >> scores[i]; // Читаем каждый элемент
     }
+    std::sort(scores.begin(), scores.end(), [](int& left, int& right){ return left > right; }); // сортировка по убыванию для счета
     return scores;
 }
 

@@ -42,6 +42,7 @@ void GameCell::ChangeNum(int num){
         }
         else { // Синий - значение не конфликтует
             this->replace_StyleSheet(29, 7, "#61AFEF");
+            this->replace_StyleSheet(45, 7, "#FFFFFF");
 
             // Проверка на предыдущее состояние
             if (this->conflict_level != 'B'){
