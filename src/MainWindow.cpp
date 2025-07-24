@@ -1,18 +1,25 @@
 #include <QVBoxLayout>
 #include <QFont> // для изменнения размера шрифта
 #include <algorithm>
+#include <QFontDatabase>
 
 #include "MainWindow.hpp"
 #include "Difficult.hpp"
 #include "PlayingWindow.hpp"
 #include "ScoreWindow.hpp"
 #include "ScoreFunctions.hpp"
-
 MainWindow::MainWindow(QWidget* parent) : QWidget(parent){
     // получение предыдущих счетов 
     this->scoreList = loadScores();
 
     QVBoxLayout* layout = new QVBoxLayout(this); // Группировка кнопок
+
+    QFontDatabase::addApplicationFont("/res/jazz-let-plain-1-0.ttf");
+    QLabel* TextLogo = new QLabel("SUDOKU", this);
+    TextLogo->setStyleSheet("QLabel { font-size: 56px; color: white; }");
+    TextLogo->setFixedHeight(50);
+    TextLogo->setAlignment(Qt::AlignmentFlag::AlignCenter);
+    TextLogo->setAttribute(Qt::WA_TranslucentBackground);
 
     // инициализация текса
     if (!this->scoreList.empty()){
@@ -33,14 +40,15 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent){
     btnExit->setFixedHeight(50);
 
     // кастомизация
-    btnPlay->setStyleSheet("QPushButton { background-color: #7CD47B; color: white; font-size: 16px; }");
+    btnPlay->setStyleSheet("QPushButton { background-color: #6dbf6b; color: white; font-weight: 700; font-size: 16px; }");
 
     btnScoreTable->setFixedHeight(50);
-    btnScoreTable->setStyleSheet("QPushButton { background-color: #4F4F4F; color: white; font-size: 16px; }");
+    btnScoreTable->setStyleSheet("QPushButton { background-color: #4F4F4F; color: white; font-weight: 700; font-size: 16px; }");
 
-    btnExit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; font-size: 16px; }");
+    btnExit->setStyleSheet("QPushButton { background-color: #AF505A; color: white; font-weight: 700; font-size: 16px; }");
 
     // добавление в группировку
+    layout->addWidget(TextLogo, Qt::AlignCenter);
     layout->addWidget(lblMaxScore);
     layout->addWidget(btnPlay);
     layout->addWidget(btnScoreTable);
