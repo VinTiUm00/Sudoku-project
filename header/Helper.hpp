@@ -25,6 +25,7 @@ public slots:
     void selectNum(ControlCell* Cell, int num);
     void ChangeCell(GameCell* Cell);
     void ChangeScore(int AddScore); // добавление счета
+    void decreaseKoef();
     void setDraftMode(bool turnOn); // Переключение режима черновика
 
 private:
