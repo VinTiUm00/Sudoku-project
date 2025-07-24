@@ -20,7 +20,6 @@ public:
 signals:
     void left0(Helper* helper); // Сигнал об обнулении счетчика незаполненных клеток (left2victory)
     void updateCurScore(int newScore); // Обновление ScoreLabel
-    void koefChanged();
 
 public slots:
     void selectNum(ControlCell* Cell, int num);

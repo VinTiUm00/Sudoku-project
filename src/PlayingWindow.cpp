@@ -87,8 +87,6 @@ void PlayingWindow::InitialiseGameField(short int mesh_size){
         }
     }
 
-    connect(CellButtons[0], &QPushButton::clicked, [this](){qDebug() << "styleSheet: " << CellButtons[0]->styleSheet();});
-
     mainLayout->addLayout(gridLayoutGame);
     connect(helper, &Helper::left0, this, &PlayingWindow::Victory); // Привязка сигнала об обнулении счетчика
 

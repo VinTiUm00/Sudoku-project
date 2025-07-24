@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent){
     btnPlay = new QPushButton("Играть", this);
     btnPlay->setFixedHeight(50);
 
-    btnScoreTable = new QPushButton("Статистика", this);
+    btnScoreTable = new QPushButton("Таблица счетов", this);
 
     btnExit = new QPushButton("Выход", this);
     btnExit->setFixedHeight(50);
@@ -119,7 +119,11 @@ void MainWindow::hideWindow(){
 
 void MainWindow::showWindow(){
     this->scoreList = loadScores();
-    this->maxScore = *(std::max_element(this->scoreList.begin(), this->scoreList.end()));
+    if (!this->scoreList.empty()){
+        this->maxScore = *(std::max_element(this->scoreList.begin(), this->scoreList.end()));
+    }
+    else
+        this->maxScore = 0;
     lblMaxScore->setText(QString("Ваш максимальный счет: " + QString::number(maxScore)));
     this->show();
 }
