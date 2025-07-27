@@ -32,7 +32,7 @@ sudo pacman -S cmake make gcc qt6-base git
 
 ##### Для Windows потребуется установить [MSYS2](https://www.msys2.org/) и использовать MINGW терминал
 ```
-pacman -Sy mingw-w64-x86_64-cmake make gcc mingw-w64-qt6-base git
+pacman -Sy mingw-w64-x86_64-cmake make gcc mingw-w64-x86_64-qt6-base git
 ```
 
 ##### склонируйте этот репозиторий к себе на компьютер
